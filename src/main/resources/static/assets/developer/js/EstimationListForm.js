@@ -149,7 +149,7 @@ async function populateEstimationListVResponse(vResponse,containerId){
 				var imageOrStatusKeyJsonObj = {};
 				var statusClassMapping = {};
 				var selectOptionsMapping = {
-					"Register Status": estimation_ApprovalStatusArrayString.split(",")
+					"Estimation Status": estimation_ApprovalStatusArrayString.split(",")
 				};
 				
 				var selectOptionsBasedOnChangeFunction = "updateEstimationDetailsInTableRow(this)";

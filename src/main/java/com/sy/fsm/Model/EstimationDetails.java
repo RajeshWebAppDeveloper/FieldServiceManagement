@@ -126,7 +126,7 @@ public class EstimationDetails	 {
 	public String totalAmount;
 	
 	@Column(name = "register_status")
-	@JsonProperty("Register Status")
+	@JsonProperty("Estimation Status")
 	public String registerStatus;
 	
 	@Column(name = "created_date")

@@ -322,7 +322,7 @@ function createDataTableWithCheckboxEdit_Delete_DropDown(responseData, exportFun
                     ? `<img src="/fsm/RetrieveFile/${rowValue}" alt="Profile Image" width="50" height="50" style="border-radius:50px">` 
                     : `<img src="/assets/img/avatars/user.png" alt="Profile Image" width="50" height="50" style="border-radius:50px">`;
             } else if (rowKey === imageOrStatusKeyJsonObj['status']) {
-                let highlightClass = statusClassMapping[rowValue] || "";
+                let highlightClass = statusClassMapping[rowValue] || "badge badge-subtle-info";
                 rowCell.innerHTML = highlightClass 
                     ? `<span class="${highlightClass}" style="font-size:16px;font-weight:bold;">${rowValue}</span>` 
                     : rowValue;

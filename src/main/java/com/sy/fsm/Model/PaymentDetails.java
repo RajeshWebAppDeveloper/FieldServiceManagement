@@ -169,8 +169,12 @@ public class PaymentDetails {
     private String balance;
 
     @Column(name = "register_status")
-    @JsonProperty("Register Status")
+    @JsonProperty("Payment Status")
     private String registerStatus;
+    
+    @Column(name = "other_status_description")
+    @JsonProperty("Other Status Description")
+    private String otherStatusDescription = "Null";
     
     @Column(name = "created_date")
 	@JsonProperty("Created Date")
@@ -496,6 +500,14 @@ public class PaymentDetails {
 		this.registerStatus = registerStatus;
 	}
 
+	public String getOtherStatusDescription() {
+		return otherStatusDescription;
+	}
+
+	public void setOtherStatusDescription(String otherStatusDescription) {
+		this.otherStatusDescription = otherStatusDescription;
+	}
+
 	public Timestamp getCreatedDate() {
 		return createdDate;
 	}
@@ -528,7 +540,8 @@ public class PaymentDetails {
 			Timestamp expectedDate, String shipModeName, String remarks, String itsHaveDiscount,
 			String discountEstimate, String demoPieceEstimate, String stockClearanceEstimate, String discountAmount,
 			String totalProductAmount, String gst, String deliveryCharges, String totalAmount, String lessAdvance,
-			String balance, String registerStatus, Timestamp createdDate, String createdBy, String paymentMode) {
+			String balance, String registerStatus, String otherStatusDescription, Timestamp createdDate,
+			String createdBy, String paymentMode) {
 		super();
 		this.id = id;
 		this.eNo = eNo;
@@ -569,6 +582,7 @@ public class PaymentDetails {
 		this.lessAdvance = lessAdvance;
 		this.balance = balance;
 		this.registerStatus = registerStatus;
+		this.otherStatusDescription = otherStatusDescription;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 		this.paymentMode = paymentMode;
@@ -577,19 +591,7 @@ public class PaymentDetails {
 	public PaymentDetails() {
 		super();
 	}
+
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

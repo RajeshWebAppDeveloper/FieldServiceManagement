@@ -4,7 +4,7 @@ function getPaymentListForm(){
 	<div class="content">
 	    <div class="row mb-3">
 	        <div class="col-sm-4 col-3">
-	            <h2 class="page-title">Payments Details</h2>
+	            <h2 class="page-title"  onclick="prompt1()">Payments Details</h2>
 	        </div>
 	        <div class="col-sm-8 col-9 text-end m-b-20">
 	            <a href="#" class="btn btn-primary float-right btn-rounded" onclick="getPaymentList('payments_list_form')">
@@ -28,7 +28,7 @@ function getPaymentListForm(){
 	                            <input type="text" class="form-control" id="payment_list_filter_estNo" placeholder="Enter Est No">
 	                        </div>
 	                        <div class="col-md-3">
-	                            <label for="payment_list_filter_paymentNo" class="form-label">Payment No</label>
+	                            <label for="payment_list_filter_paymentNo" class="form-label">Order No</label>
 	                            <input type="text" class="form-control" id="payment_list_filter_paymentNo" placeholder="Enter Payment No">
 	                        </div>
 	                        <div class="col-md-3">
@@ -173,7 +173,7 @@ async function populatePaymentListVResponse(vResponse,containerId){
 			var imageOrStatusKeyJsonObj = {};
 			var statusClassMapping = {};
 			var selectOptionsMapping = {
-				"Register Status": payment_ApprovalStatusArrayString.split(",")
+				"Payment Status": payment_ApprovalStatusArrayString.split(",")
 			};
 			var selectOptionsBasedOnChangeFunction = "updatePaymentDetailsInTableRow(this)";
 			var tableId = containerId+"_table_id";		
@@ -250,37 +250,6 @@ function clearPaymentFilters() {
     document.getElementById('payment_list_filter_form').reset();
 };
 
-async function updatePaymentDetailsInTableRow(vObj){	
-		
-	var jsonObj = JSON.parse("{}");	
-	jsonObj['ID'] = vObj.parentNode.parentNode.childNodes[1].innerHTML;	    
-	jsonObj['Payment Status'] = vObj.value;	
-	jsonObj['Created Date'] = new Date().toISOString();
-	jsonObj['Created By'] = logginerUserId;  
-	swal({
-	        title: "Confirmation",
-	        text: "Do you want to Update Status ?",
-	        icon: "info",
-	        buttons: true,
-	        dangerMode: true,
-	 }).then((confirmation) => {
-	        if (confirmation) {		  		
-    			let url = "/fsm/updatePaymentDetailsInTableRow";
-				let itemName = "updatePaymentDetailsInTableRow";
-    			getDataFromServicePoint(url,jsonObj)
-        			.then(async data => await populateUpdatePaymentDetailsInTableRowVResponse(data)) 
-        			.catch(error => handleError(itemName,error));
-			}
-	 });	
-};	
-
-async function populateUpdatePaymentDetailsInTableRowVResponse(vResponseObj){
-    if(vResponseObj.status == "true"){			
-		toastr.success("Successfully Updated","Status Changed", {closeButton: !0,tapToDismiss: !1});
-	}else{
-		toastr.warning("Invalid Payment Details","Warning", {closeButton: !0,tapToDismiss: !1});
-	}
-};
 
 
 async function exportJasperReportInPaymentInTableRow(vObj){
@@ -326,4 +295,83 @@ function populateDeletePaytmentDetailsVResponse(vResponseObj){
         toastr.success("Deleted Successfully","Completed", {closeButton: !0,tapToDismiss: !1});         
         showPaymentListForm('');                                  
     }
+};
+
+
+async function updatePaymentDetailsInTableRow(vObj){	
+		
+	var jsonObj = JSON.parse("{}");	
+	jsonObj['ID'] = vObj.parentNode.parentNode.childNodes[1].innerHTML;	    
+	jsonObj['Payment Status'] = vObj.value;	
+	jsonObj['Created Date'] = new Date().toISOString();
+	jsonObj['Created By'] = logginerUserId;  
+	swal({
+	        title: "Confirmation",
+	        text: "Do you want to Update Status ?",
+	        icon: "info",
+	        buttons: true,
+	        dangerMode: true,
+	 }).then((confirmation) => {
+	        if (confirmation) {		  		
+    			let url = "/fsm/updatePaymentDetailsInTableRow";
+				let itemName = "updatePaymentDetailsInTableRow";
+    			getDataFromServicePoint(url,jsonObj)
+        			.then(async data => await populateUpdatePaymentDetailsInTableRowVResponse(data,jsonObj)) 
+        			.catch(error => handleError(itemName,error));
+			}
+	 });	
+};	
+
+async function populateUpdatePaymentDetailsInTableRowVResponse(vResponseObj,jsonObj){
+    if(vResponseObj.status == "true"){		
+		if(jsonObj['Payment Status'] == "Other"){
+			updatePaymentDetailsInTableRowStatusOtherDescription(jsonObj);	
+		}else{
+			toastr.success("Successfully Updated","Status Changed", {closeButton: !0,tapToDismiss: !1});
+			filterPayment();
+		}	
+		
+	}else{
+		toastr.warning("Invalid Payment Details","Warning", {closeButton: !0,tapToDismiss: !1});
+	}
+};
+
+function updatePaymentDetailsInTableRowStatusOtherDescription(jsonObj){
+	swal({
+	    title: "Update Status",
+	    text: "Other Status Description:",
+	    content: {
+	        element: "input",
+	        attributes: {
+	            placeholder: "Enter Other Status Description",
+	            type: "text",
+	        },
+	    },
+	    buttons: {
+	        cancel: "Cancel",
+	        confirm: "Submit",
+	    },
+	}).then((value) => {
+	    if (value) {
+			jsonObj['Other Status Description'] = value;
+			let url = "/fsm/updatePaymentDetailsInTableRowStatusOtherDescription";
+			let itemName = "updatePaymentDetailsInTableRowStatusOtherDescription";
+			getDataFromServicePoint(url,jsonObj)
+    			.then(async data => await populatePaymentDetailsInTableRowStatusOtherDescription(data)) 
+    			.catch(error => handleError(itemName,error));
+
+	    } else {	        
+			toastr.warning("Invalid Description Information","Warning", {closeButton: !0,tapToDismiss: !1});
+	    }
+	});
+};
+
+
+async function populatePaymentDetailsInTableRowStatusOtherDescription(vResponseObj){
+    if(vResponseObj.status == "true"){				
+		toastr.success("Successfully Updated","Status Changed", {closeButton: !0,tapToDismiss: !1});
+		filterPayment();		
+	}else{
+		toastr.warning("Invalid Payment Details","Warning", {closeButton: !0,tapToDismiss: !1});
+	}
 };

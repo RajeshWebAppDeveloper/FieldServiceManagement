@@ -45,7 +45,9 @@
 	<parameter name="createdDate" class="java.lang.String"/>
 	<parameter name="createdBy" class="java.lang.String"/>
 	<parameter name="paymentMode" class="java.lang.String"/>
-	<query language="SQL"><![CDATA[SELECT * FROM order_product_details WHERE reference_id= $P{id}]]></query>
+	<query language="SQL"><![CDATA[SELECT 
+*
+ FROM order_product_details WHERE reference_id= $P{id}]]></query>
 	<field name="id" class="java.util.UUID">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
@@ -106,7 +108,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="63ef1bba-00d4-4d27-a025-badad4ca2d98" x="80" y="255" width="200" height="20" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA["     :     "+$P{customerPinCode}]]></expression>
+			<expression><![CDATA["         "+$P{customerPinCode}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -135,7 +137,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="2a5834d0-f972-4985-a4cc-8ab5c41d430e" x="405" y="165" width="155" height="20" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{paymentCharges}]]></expression>
+			<expression><![CDATA[" "+$P{paymentCharges}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -144,7 +146,7 @@
 			</box>
 		</element>
 		<element kind="staticText" uuid="e4fcf048-2e72-4142-b195-f6fb084e1581" x="280" y="205" width="125" height="30" bold="false" hTextAlign="Left" vTextAlign="Middle">
-			<text><![CDATA[ Others]]></text>
+			<text><![CDATA[Payment Mode / Other]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -164,7 +166,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="a2f77e8e-d8de-4731-9f78-a202fc344f95" x="405" y="235" width="155" height="20" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{warranty}]]></expression>
+			<expression><![CDATA["     "+$P{warranty}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -173,7 +175,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="8b8c742a-2218-4aba-b6f6-c596d723f01f" x="405" y="135" width="155" height="30" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{repCode}]]></expression>
+			<expression><![CDATA["     "+$P{repCode}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -202,7 +204,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="244b64a5-5625-4698-9c5a-9816c4d50b6f" x="405" y="185" width="155" height="20" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{paymentTermDate}]]></expression>
+			<expression><![CDATA["     "+$P{paymentTermDate}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -221,7 +223,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="3ab44a72-0afd-4730-98eb-61a40aff9886" x="405" y="105" width="155" height="30" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{orderProcessDate}]]></expression>
+			<expression><![CDATA["     "+$P{orderProcessDate}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -267,7 +269,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="49f09f83-6c56-4b32-a7b5-eed9bd5882ef" x="80" y="275" width="200" height="20" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA["     :     "+$P{customerEmail}]]></expression>
+			<expression><![CDATA["         "+$P{customerEmail}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -305,7 +307,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="393299f7-8e06-48b5-8267-adf0f9fb0a54" x="405" y="255" width="155" height="20" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{panAndGst}]]></expression>
+			<expression><![CDATA["     "+$P{panAndGst}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -334,7 +336,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="520570f6-0185-4cf8-aed5-894e934ec24c" x="405" y="75" width="155" height="30" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{orderNo}]]></expression>
+			<expression><![CDATA["     "+$P{orderNo}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -363,7 +365,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="80d88aee-5036-4d36-bc0a-42be9b3cb2eb" x="405" y="275" width="155" height="20" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{customerPhone}]]></expression>
+			<expression><![CDATA["     "+$P{customerPhone}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -382,7 +384,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="b779e861-c7f5-4737-882f-9fdba1cbc586" x="405" y="295" width="155" height="30" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{demoDate}]]></expression>
+			<expression><![CDATA["     "+$P{demoDate}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -401,7 +403,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="36f5fac0-957f-43d5-afea-bce97d741c45" x="80" y="295" width="200" height="30" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA["     :     "+$P{demoPlan}]]></expression>
+			<expression><![CDATA["          "+$P{demoPlan}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -410,7 +412,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="3c6a6bc4-4216-417a-b8a6-9be83907740c" x="405" y="55" width="155" height="20" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{estNo}]]></expression>
+			<expression><![CDATA["     "+$P{estNo}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -446,7 +448,7 @@
 			</box>
 		</element>
 		<element kind="textField" uuid="a0241fdb-864b-4c5b-afe0-4fe09da516e0" x="405" y="205" width="155" height="30" hTextAlign="Left" vTextAlign="Middle">
-			<expression><![CDATA[":     "+$P{paymentMode}]]></expression>
+			<expression><![CDATA["     "+$P{paymentMode}]]></expression>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -526,7 +528,7 @@
 			</box>
 		</element>
 		<element kind="staticText" uuid="f91ef282-fddc-48f2-ace6-bd4fe0380609" x="400" y="0" width="50" height="20" fontSize="10.0" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Tax]]></text>
+			<text><![CDATA[Tax %]]></text>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -646,7 +648,8 @@
 				</box>
 			</element>
 			<element kind="textField" uuid="9a57084b-3fd0-4de3-aac1-060ef6b7eebc" x="450" y="0" width="110" height="20" fontSize="10.0" linkType="None" linkTarget="Self" hTextAlign="Center" vTextAlign="Middle">
-				<expression><![CDATA[$F{total}]]></expression>
+				<expression><![CDATA[new java.text.DecimalFormat("#").format($F{total})
+]]></expression>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -783,7 +786,7 @@
 			</box>
 		</element>
 		<element kind="staticText" uuid="7b7e2b5a-1cc0-4833-a307-ddc9b8056e03" x="286" y="27" width="109" height="25" bold="false" hTextAlign="Left" vTextAlign="Middle">
-			<text><![CDATA[ GST % ]]></text>
+			<text><![CDATA[ GST Amount ]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

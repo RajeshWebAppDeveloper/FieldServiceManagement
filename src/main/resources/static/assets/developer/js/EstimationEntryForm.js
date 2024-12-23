@@ -246,7 +246,7 @@ function getEstimationEntryForm(showType){
 								                                <tr>
 								                                   <td colspan="5" class="form-label">Approval Status:</td>
 								                                    <td colspan="3">
-								                                    	<select class="form-select" id="fsm_Estimation_detail_approval_status1" name="Register Status">
+								                                    	<select class="form-select" id="fsm_Estimation_detail_approval_status1" name="Estimation Status">
 																			<option value="Estimation Enquiry">Estimation Enquiry</option>
 																			<option value="Cancel Estimation">Cancel Estimation</option>	
 																			<option value="Convert To Order">Convert To Order</option>	
@@ -353,7 +353,7 @@ async function updateEstimationDetails(){
 	    jsonObj['GST'] = document.getElementById("fsm_Estimation_detail_gst").value;
 	    jsonObj['Delivery Charges'] = document.getElementById("fsm_Estimation_detail_delivery_charges").value;
 	    jsonObj['Total Amount'] = document.getElementById("fsm_Estimation_detail_total_amount").value;
-	    jsonObj['Register Status'] = document.getElementById("fsm_Estimation_detail_approval_status1").value;	
+	    jsonObj['Estimation Status'] = document.getElementById("fsm_Estimation_detail_approval_status1").value;	
 	    jsonObj['Created Date'] = new Date().toISOString();
 	    jsonObj['Created By'] = logginerUserId;  
 	/*var inputNames = "Estimation"; 
@@ -364,7 +364,7 @@ async function updateEstimationDetails(){
 	    let url = "/fsm/updateEstimationDetails";
 		let itemName = "updateEstimationDetails";
 	    await getDataFromServicePoint(url,jsonObj)
-	        .then(async data => await populateEstimationDetailsVResponse(data,jsonObj['Register Status'])) 
+	        .then(async data => await populateEstimationDetailsVResponse(data,jsonObj['Estimation Status'])) 
 	        .catch(error => handleError(itemName,error));
 	}
 };
@@ -471,7 +471,7 @@ function populateEditEstimationDetailsVResponse(vResponseObj){
     document.getElementById("fsm_Estimation_detail_gst").value = jsonObj['GST'];
     document.getElementById("fsm_Estimation_detail_delivery_charges").value = jsonObj['Delivery Charges'];
     document.getElementById("fsm_Estimation_detail_total_amount").value = jsonObj['Total Amount'];
-    document.getElementById("fsm_Estimation_detail_approval_status1").value = jsonObj['Register Status'];
+    document.getElementById("fsm_Estimation_detail_approval_status1").value = jsonObj['Estimation Status'];
 	toggleItsHaveDiscount(jsonObj['Its Have Discount']);
 	var productsJsonObj = vResponseObj.estProductData;
 		loadEstimationProductRowsFromJson(productsJsonObj);		    		

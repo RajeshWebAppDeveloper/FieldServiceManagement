@@ -1,5 +1,5 @@
 <!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
-<jasperReport name="Dar_Details" language="java" columnCount="1" pageWidth="1700" pageHeight="595" columnWidth="1660" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a5c9b49-9dc5-422a-ac69-e92cf61ef530">
+<jasperReport name="Dar_Details" language="java" columnCount="1" pageWidth="2000" pageHeight="595" columnWidth="1960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a5c9b49-9dc5-422a-ac69-e92cf61ef530">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -110,6 +110,10 @@ getFilterDarDetailsList(
 		<property name="com.jaspersoft.studio.field.label" value="total_expenses"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="dar_details"/>
 	</field>
+	<field name="remarks" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="remarks"/>
+		<property name="com.jaspersoft.studio.field.label" value="remarks"/>
+	</field>
 	<field name="status_to_visit" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="status_to_visit"/>
 		<property name="com.jaspersoft.studio.field.label" value="status_to_visit"/>
@@ -175,8 +179,8 @@ getFilterDarDetailsList(
 	</group>
 	<background splitType="Stretch"/>
 	<title height="184" splitType="Stretch">
-		<element kind="frame" uuid="d8d9e644-3a32-491d-97cb-a277aff17133" mode="Opaque" x="0" y="-2" width="1660" height="68" backcolor="#000000">
-			<element kind="staticText" uuid="cfa21334-0634-4605-9ea7-aca4981f67e4" x="430" y="30" width="1210" height="29" fontSize="22.0" bold="false" hTextAlign="Right" style="SubTitle">
+		<element kind="frame" uuid="d8d9e644-3a32-491d-97cb-a277aff17133" mode="Opaque" x="0" y="-2" width="1960" height="68" backcolor="#000000">
+			<element kind="staticText" uuid="cfa21334-0634-4605-9ea7-aca4981f67e4" x="1" y="30" width="1939" height="29" fontSize="22.0" bold="false" hTextAlign="Center" style="SubTitle">
 				<text><![CDATA[DAR - Details]]></text>
 			</element>
 			<box>
@@ -186,7 +190,7 @@ getFilterDarDetailsList(
 				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="frame" uuid="b0c895f6-6dbd-477d-9858-9ad66af087e1" mode="Opaque" x="0" y="66" width="1660" height="118" forecolor="#000000" backcolor="#9D94F7">
+		<element kind="frame" uuid="b0c895f6-6dbd-477d-9858-9ad66af087e1" mode="Opaque" x="0" y="66" width="1960" height="118" forecolor="#000000" backcolor="#9D94F7">
 			<element kind="textField" uuid="a33fce3b-20c1-4696-873a-fe134d1e7d88" x="330" y="44" width="200" height="33" forecolor="#FFFFFF" fontSize="12.0" pattern="EEEEE dd MMMMM yyyy" bold="true" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$P{darPerformToDate}]]></expression>
 			</element>
@@ -244,8 +248,8 @@ getFilterDarDetailsList(
 		</element>
 	</title>
 	<pageHeader splitType="Stretch"/>
-	<columnHeader height="30" splitType="Stretch">
-		<element kind="rectangle" uuid="8de0de24-497f-4a06-aa9a-12aa1549537f" x="0" y="0" width="1660" height="30" backcolor="#E6E6E8"/>
+	<columnHeader height="31" splitType="Stretch">
+		<element kind="rectangle" uuid="8de0de24-497f-4a06-aa9a-12aa1549537f" x="0" y="0" width="1960" height="30" backcolor="#E6E6E8"/>
 		<element kind="staticText" uuid="35419a6f-9d41-4e58-83d0-f1f9fa8a3ff4" x="47" y="0" width="43" height="30" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Dar No]]></text>
 			<box>
@@ -366,7 +370,7 @@ getFilterDarDetailsList(
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="9fd67c29-d5ed-4281-bbae-19270339c9c6" x="1340" y="0" width="110" height="30" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="9fd67c29-d5ed-4281-bbae-19270339c9c6" x="1590" y="0" width="110" height="30" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Created Date]]></text>
 			<box>
 				<pen lineColor="#FFFFFF"/>
@@ -376,7 +380,7 @@ getFilterDarDetailsList(
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="131581a0-4e74-454f-ab23-cc818812afbd" x="1450" y="0" width="130" height="30" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="131581a0-4e74-454f-ab23-cc818812afbd" x="1700" y="1" width="130" height="30" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Created By User Id]]></text>
 			<box>
 				<pen lineColor="#FFFFFF"/>
@@ -386,7 +390,7 @@ getFilterDarDetailsList(
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="e8cc99fe-8a95-4239-a56b-91ebdcb34fbe" x="1580" y="0" width="80" height="30" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="e8cc99fe-8a95-4239-a56b-91ebdcb34fbe" x="1830" y="1" width="130" height="29" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Total]]></text>
 			<box>
 				<pen lineColor="#FFFFFF"/>
@@ -398,6 +402,16 @@ getFilterDarDetailsList(
 		</element>
 		<element kind="staticText" uuid="77071e99-7813-40c6-96e3-898e1f589141" x="0" y="2" width="47" height="28" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[So.No]]></text>
+			<box>
+				<pen lineColor="#FFFFFF"/>
+				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="f8b6e5c5-2bc1-4aaa-b77a-994af7936e86" x="1340" y="0" width="250" height="30" fontName="DejaVu Sans" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Remarks]]></text>
 			<box>
 				<pen lineColor="#FFFFFF"/>
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -508,7 +522,7 @@ getFilterDarDetailsList(
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="a9f9514e-0843-4d27-b045-6872a99f16f0" x="1340" y="0" width="110" height="30" printWhenGroupChanges="planned_activity" fontName="DejaVu Serif" bold="false" hTextAlign="Center" vTextAlign="Middle">
+			<element kind="textField" uuid="a9f9514e-0843-4d27-b045-6872a99f16f0" x="1590" y="0" width="110" height="30" printWhenGroupChanges="planned_activity" fontName="DejaVu Serif" bold="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{created_date}]]></expression>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -517,7 +531,7 @@ getFilterDarDetailsList(
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="3de1b56e-dcee-4426-9a27-4c941cee0fcf" x="1450" y="0" width="130" height="30" printWhenGroupChanges="planned_activity" fontName="DejaVu Serif" bold="false" hTextAlign="Center" vTextAlign="Middle">
+			<element kind="textField" uuid="3de1b56e-dcee-4426-9a27-4c941cee0fcf" x="1700" y="0" width="130" height="30" printWhenGroupChanges="planned_activity" fontName="DejaVu Serif" bold="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{created_by}]]></expression>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -526,7 +540,7 @@ getFilterDarDetailsList(
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="165d2884-de23-45a6-8f33-1ba5644ce953" x="1580" y="0" width="80" height="30" printWhenGroupChanges="planned_activity" fontName="DejaVu Serif" bold="false" hTextAlign="Center" vTextAlign="Middle">
+			<element kind="textField" uuid="165d2884-de23-45a6-8f33-1ba5644ce953" x="1830" y="0" width="130" height="30" printWhenGroupChanges="planned_activity" fontName="DejaVu Serif" bold="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{total_expenses}]]></expression>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -553,13 +567,22 @@ getFilterDarDetailsList(
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 			</element>
+			<element kind="textField" uuid="189e21bb-8a90-4a7e-9151-c49d53ca9c58" x="1340" y="0" width="250" height="30" printWhenGroupChanges="planned_activity" fontName="DejaVu Serif" bold="false" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{remarks}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
 		</band>
 	</detail>
 	<lastPageFooter height="46">
-		<element kind="rectangle" uuid="8ec7b069-bc8c-474f-a42c-3a0aecfa720c" x="0" y="10" width="1660" height="31" backcolor="#C3C2FC">
+		<element kind="rectangle" uuid="8ec7b069-bc8c-474f-a42c-3a0aecfa720c" x="0" y="10" width="1960" height="31" backcolor="#C3C2FC">
 			<pen lineWidth="0.0"/>
 		</element>
-		<element kind="staticText" uuid="70652c82-6b48-406f-9e35-47edf6158a4a" x="1" y="9" width="1449" height="33" forecolor="#FFFFFF" fontName="DejaVu Sans" bold="true" hTextAlign="Right" vTextAlign="Middle">
+		<element kind="staticText" uuid="70652c82-6b48-406f-9e35-47edf6158a4a" x="1" y="9" width="1699" height="33" forecolor="#FFFFFF" fontName="DejaVu Sans" bold="true" hTextAlign="Right" vTextAlign="Middle">
 			<text><![CDATA[Sub Total      :]]></text>
 			<box>
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -568,7 +591,7 @@ getFilterDarDetailsList(
 				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="0f15d1ab-32c5-415c-971d-d4a59b82c04d" x="1450" y="9" width="210" height="33" fontName="DejaVu Serif" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Column header">
+		<element kind="textField" uuid="0f15d1ab-32c5-415c-971d-d4a59b82c04d" x="1700" y="9" width="250" height="33" fontName="DejaVu Serif" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Column header">
 			<expression><![CDATA[$V{parameterBasedExpensesFinalTotal}]]></expression>
 			<box style="Column header">
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -577,10 +600,10 @@ getFilterDarDetailsList(
 				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="line" uuid="cad0fe9e-6529-4de0-8d29-a98796f84f84" x="0" y="41" width="1660" height="1" forecolor="#9D94F7">
+		<element kind="line" uuid="cad0fe9e-6529-4de0-8d29-a98796f84f84" x="0" y="42" width="1960" height="1" forecolor="#9D94F7">
 			<pen lineWidth="2.0"/>
 		</element>
-		<element kind="line" uuid="dbe9ea1a-0f51-45e8-b1c1-49859ba79236" x="0" y="9" width="1660" height="1" forecolor="#9D94F7">
+		<element kind="line" uuid="dbe9ea1a-0f51-45e8-b1c1-49859ba79236" x="0" y="10" width="1960" height="1" forecolor="#9D94F7">
 			<pen lineWidth="2.0"/>
 		</element>
 	</lastPageFooter>

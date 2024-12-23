@@ -488,6 +488,7 @@ public class MobileRestController {
 	            	darDetails.setFromLocation(newDetails.getFromLocation());
 	            	darDetails.setToLocation(newDetails.getToLocation());
 	            	darDetails.setTotalAmount(newDetails.getTotalAmount());
+	            	darDetails.setRemarks(newDetails.getRemarks());
 	            	darDetails.setStatusToVisit(newDetails.getStatusToVisit());
 	            	darDetails.setCreatedDate(newDetails.getCreatedDate());
 	            	darDetails.setCreatedBy(newDetails.getCreatedBy());	            	
@@ -742,7 +743,9 @@ public class MobileRestController {
                Optional<MobileEstimationDetails> existingRecord = mobileEstimationDetailsRepository.findById(estimationId);	                
                if (existingRecord.isPresent()) {	                    
                 
-                MobileEstimationDetails newDetails = existingRecord.get();
+                MobileEstimationDetails newDetails = existingRecord.get();   
+                newDetails.setRegisterStatus(estimationStatus);
+                mobileEstimationDetailsRepository.save(newDetails);
                 if (estimationStatus.equalsIgnoreCase("Convert To Order")) {
                 		boolean orderProductConvertStatus = false;
                 		String sourceString = "";
@@ -1106,4 +1109,145 @@ public class MobileRestController {
 		}
 	    return vResponse;
 	}	
+	
+
+	@RequestMapping(value = "/fsm/mobileUpdateEstimationDetailsInTableRow", method = RequestMethod.POST, consumes = "application/json")
+	public String mobileUpdateEstimationDetailsInTableRow(@RequestBody String payload) {
+		String vResponse = "{\"status\":\"false\"}";
+		try {
+			System.out.println("/fsm/mobileUpdateEstimationDetailsInTableRow:::::::" + payload);
+
+			ObjectMapper mapper = new ObjectMapper();
+			JSONObject jObj = new JSONObject(payload);
+			String estimationIdString = jObj.getString("id");
+			String estimationStatus = jObj.getString("estimationStatus");
+			String createdDateString = jObj.getString("createdDate");
+			String createdBy = jObj.getString("createdBy");
+
+			Instant instant = Instant.parse(createdDateString);
+			Timestamp createdDate = Timestamp.from(instant);
+			UUID estimationId = UUID.fromString(estimationIdString);
+
+			Optional<MobileEstimationDetails> existingRecord = mobileEstimationDetailsRepository.findById(estimationId);
+			if (existingRecord.isPresent()) {
+				System.out.println("Existing Estimation Record Found");
+				MobileEstimationDetails newDetails = existingRecord.get();
+				newDetails.setRegisterStatus(estimationStatus);
+				newDetails.setCreatedDate(createdDate);
+				newDetails.setCreatedBy(createdBy);
+				mobileEstimationDetailsRepository.save(newDetails);
+				vResponse = "{\"status\":\"true\"}";
+				if (estimationStatus.equalsIgnoreCase("Convert To Order")) {
+					String sourceString;
+					Optional<MobileOrderDetails> existingOrderRecord = mobileOrderDetailsRepository.findByEstNo(newDetails.getEstNO());
+					if (existingOrderRecord.isPresent()) {
+						System.out.println("existing Order Record found");
+						mobileUpdateOrderDetailsInTableRow(existingOrderRecord.get(), newDetails, createdDate, createdBy);
+						vResponse = "{\"status\":\"true\"}";
+
+					} else {
+						System.out.println("new Order Record Created");
+						MobileOrderDetails orderDetails = new MobileOrderDetails();
+						UUID orderId = UUID.randomUUID();
+						orderDetails.setId(orderId);
+						mobileUpdateOrderDetailsInTableRow(orderDetails, newDetails, createdDate, createdBy);
+						mobileOrderDetailsRepository.save(orderDetails);
+						boolean orderProductConvertStatus = mobileConvertToOrderStatusUpdateProductsDetailsInTableRow(estimationIdString, orderId.toString());
+						if (orderProductConvertStatus) {
+							vResponse = "{\"status\":\"true\"}";
+						}else {
+							vResponse = "{\"status\":\"false\"}";
+						}
+					}
+
+				}
+			}else {
+				vResponse = "{\"status\":\"false\", \"message\":\"An error occurred.\"}";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			vResponse = "{\"status\":\"false\", \"message\":\"An error occurred.\"}";
+		}
+		System.out.println("VResponse :::" + vResponse);
+		return vResponse;
+	}
+
+	private MobileOrderDetails mobileUpdateOrderDetailsInTableRow(MobileOrderDetails orderDetails, MobileEstimationDetails newDetails, Timestamp createdDate, String createdBy) {
+		orderDetails.seteNo("");
+		orderDetails.setEstNo(newDetails.getEstNO());
+		orderDetails.setOrderNo(mobileOrderDetailsRepository.generateOrderSequence());
+		orderDetails.setSoNo("");
+		orderDetails.setDdNo("");
+		orderDetails.setCustomerName(newDetails.getCustomerName());
+		orderDetails.setOrderProcessDate(new Timestamp(System.currentTimeMillis()));
+		orderDetails.setRepCode(newDetails.getRepAttd());
+		orderDetails.setBillingName("");
+		orderDetails.setBillingAddress(newDetails.getBillingAddress());
+		orderDetails.setCustomerCity(newDetails.getBillingCity());
+		orderDetails.setCustomerPinCode(newDetails.getBillingPin());
+		orderDetails.setCustomerPhone(newDetails.getPhone());
+		orderDetails.setCustomerEmail(newDetails.getEmail());
+		orderDetails.setDeliveryCity(newDetails.getDeliveryCity());
+		orderDetails.setDemoPlan("");
+		orderDetails.setPaymentCharges("");
+		orderDetails.setPaymentTermDate(null);
+		orderDetails.setWarranty(newDetails.getWarranty());
+		orderDetails.setPanAndGst(newDetails.getPanGst());
+		orderDetails.setDemoDate(null);
+		orderDetails.setDeliveryAddress(newDetails.getDeliveryAddress());
+		orderDetails.setDeliveryPinCode(newDetails.getDeliveryPin());
+		orderDetails.setExpectedDate(null);
+		orderDetails.setShipModeName("");
+		orderDetails.setRemarks(newDetails.getRemarks());
+		orderDetails.setItsHaveDiscount(newDetails.getItsHaveDiscount());
+		orderDetails.setDiscountEstimate(newDetails.getDiscountEstimate());
+		orderDetails.setDemoPieceEstimate(newDetails.getDemoPieceEstimate());
+		orderDetails.setStockClearanceEstimate(newDetails.getStockClearanceEstimate());
+		orderDetails.setDiscountAmount(newDetails.getDiscountAmount());
+		orderDetails.setTotalProductAmount(newDetails.getTotalAmount());
+		orderDetails.setGst(newDetails.getGst());
+		orderDetails.setDeliveryCharges(newDetails.getDeliveryCharges());
+		orderDetails.setTotalAmount(newDetails.getTotalAmount());
+		orderDetails.setLessAdvance("");
+		orderDetails.setBalance("");
+		orderDetails.setRegisterStatus("New Order");
+		orderDetails.setCreatedDate(createdDate);
+		orderDetails.setCreatedBy(createdBy);
+		return mobileOrderDetailsRepository.save(orderDetails);
+	}
+
+
+	public boolean mobileConvertToOrderStatusUpdateProductsDetailsInTableRow(String estimationIdString, String orderIdString) {
+		boolean vResponse = false;
+		try {
+			System.out.println("Normal Method ConvertToOrderStatusUpdateProductsDetails:::::::");
+			List<EstimationProductDetails> estProductDetailsList = estimationProductDetailsRepository.findByReferenceId(estimationIdString);
+			List<OrderProductDetails> oldOrderProductDetailsList = orderProductDetailsRepository.findByReferenceId(orderIdString);
+			if (!oldOrderProductDetailsList.isEmpty()) {
+				orderProductDetailsRepository.deleteAll(oldOrderProductDetailsList);
+			}
+			List<OrderProductDetails> orderProductDetailsArrayList = new ArrayList<>();
+			for (EstimationProductDetails estProductDetails : estProductDetailsList) {
+				OrderProductDetails ordProducts = new OrderProductDetails();
+				ordProducts.setId(UUID.randomUUID());
+				ordProducts.setReferenceId(orderIdString);
+				ordProducts.setProductType("");
+				ordProducts.setProductDetails(estProductDetails.getProductDetails());
+				ordProducts.setProductCode(estProductDetails.getProductCode());
+				ordProducts.setQty(estProductDetails.getQty());
+				ordProducts.setTax(estProductDetails.getTax());
+				ordProducts.setUnitPrice(estProductDetails.getUnitPrice());
+				ordProducts.setTotal(estProductDetails.getTotal());
+				orderProductDetailsArrayList.add(ordProducts);
+			}
+			orderProductDetailsRepository.saveAll(orderProductDetailsArrayList);
+			vResponse = true;
+		} catch (Exception e) {
+			vResponse = false;
+			e.printStackTrace();
+		}
+		System.out.println("VResponse :::" + vResponse);
+		return vResponse;
+	}
+	
 }

@@ -200,10 +200,10 @@ async function populateOrderListVResponse(vResponse,containerId){
 			selectRecordStr = "";
 			var idField = "ID";
 			var imageOrStatusKeyJsonObj = {		
-				status:"Register Status"
+				status:"Order Status"
 			};
 			var statusClassMapping = {
-				"Partial Payment":"badge badge-subtle-info"
+				"Order Dispatched":"badge badge-subtle-info"
 				,"Cancel Order":"badge badge-subtle-danger"
 				,"Payment Confirmed":"badge badge-subtle-success"
 				,"New Order":"badge badge-subtle-warning"

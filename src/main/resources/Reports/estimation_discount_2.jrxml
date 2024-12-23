@@ -41,7 +41,7 @@
 	<parameter name="createdDate" class="java.lang.String"/>
 	<parameter name="createdBy" class="java.lang.String"/>
 	<query language="SQL"><![CDATA[select
- * 
+*
  from 
  estimation_product_details 
  where 
@@ -191,15 +191,6 @@
 		</element>
 		<element kind="textField" uuid="ded65874-5689-4c8c-8ed9-6999ab1b10b8" x="500" y="40" width="60" height="20" fontSize="10.0" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{repAcc}]]></expression>
-			<box>
-				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-			</box>
-		</element>
-		<element kind="staticText" uuid="64d66b56-abec-4e61-a541-a2dad6db0150" x="0" y="60" width="80" height="60" fontSize="10.0" hTextAlign="Center" vTextAlign="Top">
-			<text><![CDATA[Billing Address]]></text>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -378,6 +369,15 @@
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
+		<element kind="staticText" uuid="8d86bf3c-7642-473e-a20b-cf3a5416d3ea" x="0" y="60" width="80" height="60" fontSize="10.0" hTextAlign="Center" vTextAlign="Top">
+			<text><![CDATA[Billing Address]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
 	</title>
 	<columnHeader height="20" splitType="Stretch">
 		<element kind="staticText" uuid="9a3fff6a-4a2b-4414-81f2-27d4bd369df0" x="0" y="0" width="30" height="20" fontSize="10.0" hTextAlign="Center" vTextAlign="Middle">
@@ -426,7 +426,7 @@
 			</box>
 		</element>
 		<element kind="staticText" uuid="79f7951b-f6a3-49f6-af35-af27c0e6c5a0" x="400" y="0" width="50" height="20" fontSize="10.0" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Tax]]></text>
+			<text><![CDATA[Tax %]]></text>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -501,7 +501,7 @@
 				</box>
 			</element>
 			<element kind="textField" uuid="22f37c0d-a1b0-418d-80cc-4d0c51ed0811" x="450" y="0" width="110" height="20" fontSize="10.0" linkType="None" linkTarget="Self" hTextAlign="Center" vTextAlign="Middle">
-				<expression><![CDATA[$F{total}]]></expression>
+				<expression><![CDATA[new java.text.DecimalFormat("#").format($F{total})]]></expression>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -567,7 +567,7 @@
 			</box>
 		</element>
 		<element kind="staticText" uuid="0520741f-7b56-44c1-bcac-9ac09936a225" x="321" y="130" width="129" height="20" fontSize="10.0" hTextAlign="Right" vTextAlign="Middle">
-			<text><![CDATA[GST %:]]></text>
+			<text><![CDATA[GST Amount:]]></text>
 			<box>
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

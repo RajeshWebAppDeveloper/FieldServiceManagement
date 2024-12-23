@@ -73,6 +73,10 @@ public class DarDetails	 {
 	@JsonProperty("Status To Visit")
 	public String statusToVisit;
 	
+	@Column(name = "remarks")
+	@JsonProperty("Remarks")
+	public String remarks;
+	
 	@Column(name = "created_date")
 	@JsonProperty("Created Date")
 	public Timestamp createdDate;
@@ -193,6 +197,14 @@ public class DarDetails	 {
 		this.statusToVisit = statusToVisit;
 	}
 
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
 	public Timestamp getCreatedDate() {
 		return createdDate;
 	}
@@ -212,7 +224,7 @@ public class DarDetails	 {
 	public DarDetails(UUID id, String darNO, Timestamp darProcessDate, String plannedActivity,
 			String deliveryPlaceNameAndAddress, String stateCumArea, String clientName, String clientMobileNO,
 			String aboutTheClient, String productDetails, String fromLocation, String toLocation, String totalExpenses,
-			String statusToVisit, Timestamp createdDate, String createdBy) {
+			String statusToVisit, String remarks, Timestamp createdDate, String createdBy) {
 		super();
 		this.id = id;
 		this.darNO = darNO;
@@ -228,6 +240,7 @@ public class DarDetails	 {
 		this.toLocation = toLocation;
 		this.totalExpenses = totalExpenses;
 		this.statusToVisit = statusToVisit;
+		this.remarks = remarks;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 	}
@@ -235,5 +248,6 @@ public class DarDetails	 {
 	public DarDetails() {
 		super();
 	}
-	
+
+		
 }

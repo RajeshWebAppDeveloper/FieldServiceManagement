@@ -423,6 +423,7 @@ public class RestController {
 	            	darDetails.setFromLocation(newDetails.getFromLocation());
 	            	darDetails.setToLocation(newDetails.getToLocation());
 	            	darDetails.setTotalExpenses(newDetails.getTotalExpenses());
+	            	darDetails.setRemarks(newDetails.getRemarks());
 	            	darDetails.setStatusToVisit(newDetails.getStatusToVisit());
 	            	darDetails.setCreatedDate(newDetails.getCreatedDate());
 	            	darDetails.setCreatedBy(newDetails.getCreatedBy());	            	
@@ -1087,8 +1088,9 @@ public class RestController {
             paymentDetails.setDeliveryCharges(newDetails.getDeliveryCharges());
             paymentDetails.setTotalAmount(newDetails.getTotalAmount());
             paymentDetails.setLessAdvance("");
-            paymentDetails.setBalance("");
+            paymentDetails.setBalance("");            
             paymentDetails.setRegisterStatus(newDetails.getRegisterStatus());
+            paymentDetails.setOtherStatusDescription("Null");
             paymentDetails.setCreatedDate(createdDate);
             paymentDetails.setCreatedBy(createdBy);
             return paymentDetailsRepository.save(paymentDetails);
@@ -2100,7 +2102,7 @@ public class RestController {
 		            : null;
 		        
 		        String itsHaveDiscount = jObj.optString("itsHaveDiscount", null);
-		        String orderStatus = jObj.optString("orderStatus", null);
+		        String paymentStatus = jObj.optString("paymentStatus", null);
 
 		        Date createdFromDate = jObj.has("createdFromDate") && !jObj.isNull("createdFromDate") 
 		            ? sdf.parse(jObj.getString("createdFromDate")) 
@@ -2116,7 +2118,7 @@ public class RestController {
 		            eNo, estNo, orderNo, soNo, ddNo, customerName,
 		            orderPerformFromDate, orderPerformToDate, repAttD, mobileNo,
 		            demoPlan, demoFromDate, demoToDate, itsHaveDiscount,
-		            orderStatus, createdFromDate, createdToDate, createdBy
+		            paymentStatus, createdFromDate, createdToDate, createdBy
 		        );
 
 		        ObjectMapper mapper = new ObjectMapper();
@@ -2153,6 +2155,7 @@ public class RestController {
 	                PaymentDetails newDetails = existingRecord.get();
 	                newDetails.setRegisterStatus(paymentStatus);
 	                newDetails.setCreatedDate(createdDate);
+	                newDetails.setOtherStatusDescription("Null");
 	                newDetails.setCreatedBy(createdBy);
 	                paymentDetailsRepository.save(newDetails);
 	                vResponse = "{\"status\":\"true\"}";	                
@@ -2187,5 +2190,43 @@ public class RestController {
 		}
 	    return vResponse;
 	}
+	    
+	    
+	    @RequestMapping(value = "/fsm/updatePaymentDetailsInTableRowStatusOtherDescription", method = RequestMethod.POST, consumes = "application/json")
+	    public String updatePaymentDetailsInTableRowStatusOtherDescription(@RequestBody String payload) {
+	        String vResponse = "{\"status\":\"false\"}";
+	        try {
+	            System.out.println("/fsm/updatePaymentDetailsInTableRowStatusOtherDescription:::::::" + payload);
+	            ObjectMapper mapper = new ObjectMapper();
+	            JSONObject jObj = new JSONObject(payload);
+	            String paymentIdString = jObj.getString("ID");
+	            String paymentStatus = jObj.getString("Payment Status");
+	            String otherStatusDescription = jObj.getString("Other Status Description");
+	            String createdDateString = jObj.getString("Created Date");
+	            String createdBy = jObj.getString("Created By");	           
+	            Instant instant = Instant.parse(createdDateString);
+	            Timestamp createdDate = Timestamp.from(instant);
+	            UUID paymentId = UUID.fromString(paymentIdString);
+	            Optional<PaymentDetails> existingRecord = paymentDetailsRepository.findById(paymentId);
+	            if (existingRecord.isPresent()) {
+		            System.out.println("Existing Estimation Record Found");
+	                PaymentDetails newDetails = existingRecord.get();
+	                newDetails.setRegisterStatus(paymentStatus);
+	                newDetails.setOtherStatusDescription(otherStatusDescription);
+	                newDetails.setCreatedDate(createdDate);
+	                newDetails.setCreatedBy(createdBy);
+	                paymentDetailsRepository.save(newDetails);
+	                vResponse = "{\"status\":\"true\"}";	                
+	            }else {
+	            	vResponse = "{\"status\":\"false\", \"message\":\"An error occurred.\"}";
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            vResponse = "{\"status\":\"false\", \"message\":\"An error occurred.\"}";
+	        }
+	        System.out.println("VResponse :::" + vResponse);
+	        return vResponse;
+	    }
+	        
 
 }

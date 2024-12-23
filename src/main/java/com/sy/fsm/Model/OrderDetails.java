@@ -169,7 +169,7 @@ public class OrderDetails {
     private String balance;
 
     @Column(name = "register_status")
-    @JsonProperty("Register Status")
+    @JsonProperty("Order Status")
     private String registerStatus;
     
     @Column(name = "created_date")

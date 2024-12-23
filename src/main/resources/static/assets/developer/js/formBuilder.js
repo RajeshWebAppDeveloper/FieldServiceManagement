@@ -86,6 +86,9 @@ async function getDataFromServicePoint(url = ``, formData = {}) {
 function handleError(formName,error){
 	//alert("ERROR:"+formName+"::::"+error);
 	toastr.error(formName+"::::"+error,"Error", {closeButton: !0,tapToDismiss: !1});
+	if(error == "TypeError: can't convert undefined to object"){
+		toastr.warning("No Data","Error", {closeButton: !0,tapToDismiss: !1});
+	}
 };
 
 

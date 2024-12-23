@@ -59,6 +59,9 @@ public class MobileDarDetails	 {
 	@Column(name = "status_to_visit")
 	public String statusToVisit;
 	
+	@Column(name = "remarks")
+	public String remarks;
+	
 	@Column(name = "created_date")
 	public Timestamp createdDate;
 	
@@ -177,6 +180,14 @@ public class MobileDarDetails	 {
 		this.statusToVisit = statusToVisit;
 	}
 
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
 	public Timestamp getCreatedDate() {
 		return createdDate;
 	}
@@ -196,7 +207,7 @@ public class MobileDarDetails	 {
 	public MobileDarDetails(UUID id, String darNO, Timestamp darProcessDate, String plannedActivity,
 			String hospitalNameAndAddress, String stateCumArea, String doctorName, String contactNumber,
 			String aboutDoctor, String productDetails, String fromLocation, String toLocation, String totalAmount,
-			String statusToVisit, Timestamp createdDate, String createdBy) {
+			String statusToVisit, String remarks, Timestamp createdDate, String createdBy) {
 		super();
 		this.id = id;
 		this.darNO = darNO;
@@ -212,6 +223,7 @@ public class MobileDarDetails	 {
 		this.toLocation = toLocation;
 		this.totalAmount = totalAmount;
 		this.statusToVisit = statusToVisit;
+		this.remarks = remarks;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 	}
@@ -220,6 +232,6 @@ public class MobileDarDetails	 {
 		super();
 	}
 
-		
+			
 		
 }

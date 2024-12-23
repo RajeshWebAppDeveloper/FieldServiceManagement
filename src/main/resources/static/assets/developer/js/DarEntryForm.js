@@ -68,6 +68,10 @@ function getDarEntryForm(showType){
 									            <textarea class="form-control" id="fsm_dar_detail_deliveryPlaceNameAndAddress" name="deliveryPlaceNameAndAddress"></textarea>
 									        </div>
 											<div class="mb-3">
+									            <label for="fsm_dar_detail_remarks" class="form-label">Remarks</label>
+									            <textarea class="form-control" id="fsm_dar_detail_remarks" name="remarks"></textarea>
+									        </div>
+											<div class="mb-3">
 									            <label for="fsm_dar_detail_statusToVisit" class="form-label">Status To Visit</label>
 									            <select class="form-select" id="fsm_dar_detail_statusToVisit" name="statusinvisit">
 													<option></option>
@@ -210,6 +214,7 @@ async function updateDarDetails(){
 	jsonObj['State Cum Area'] = document.getElementById("fsm_dar_detail_stateCumArea").value;
 	jsonObj['Planned Activity']  = document.getElementById("fsm_dar_detail_plannedActivity").value;
 	jsonObj['Delivery Place Name And Address'] = document.getElementById("fsm_dar_detail_deliveryPlaceNameAndAddress").value;
+	jsonObj['Remarks'] = document.getElementById("fsm_dar_detail_remarks").value;
 	jsonObj['Client Name'] = document.getElementById("fsm_dar_detail_clientName").value;
 	jsonObj['Client Mobile No'] = document.getElementById("fsm_dar_detail_clientMobileNO").value;		
     jsonObj['From Location'] = document.getElementById("fsm_dar_detail_fromLocation").value;
@@ -249,6 +254,7 @@ function clearDarDetails(){
 	document.getElementById("fsm_dar_detail_stateCumArea").value= "";
 	document.getElementById("fsm_dar_detail_plannedActivity").value= "";
 	document.getElementById("fsm_dar_detail_deliveryPlaceNameAndAddress").value= "";
+	document.getElementById("fsm_dar_detail_remarks").value = "";
 	document.getElementById("fsm_dar_detail_clientName").value = "";
 	document.getElementById("fsm_dar_detail_clientMobileNO").value= "";		
 	document.getElementById("fsm_dar_detail_fromLocation").value= "";
@@ -294,6 +300,7 @@ function populateEditDarDetailsVResponse(vResponseObj){
 		document.getElementById("fsm_dar_detail_stateCumArea").value = jsonObj['State Cum Area'] ;
 		document.getElementById("fsm_dar_detail_plannedActivity").value  = jsonObj['Planned Activity'];
 		document.getElementById("fsm_dar_detail_deliveryPlaceNameAndAddress").value = jsonObj['Delivery Place Name And Address'] ;
+		document.getElementById("fsm_dar_detail_remarks").value = jsonObj['Remarks']
 		document.getElementById("fsm_dar_detail_clientName").value = jsonObj['Client Name'] ;
 		document.getElementById("fsm_dar_detail_clientMobileNO").value = jsonObj['Client Mobile No'] ;		
 		document.getElementById("fsm_dar_detail_fromLocation").value = jsonObj['From Location'] ;

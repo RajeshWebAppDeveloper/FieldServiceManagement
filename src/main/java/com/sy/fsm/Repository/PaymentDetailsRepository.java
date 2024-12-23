@@ -40,7 +40,7 @@ public interface PaymentDetailsRepository extends JpaRepository<PaymentDetails,U
 	    String eNo, String estNo, String orderNo, String soNo, String ddNo, String customerName,
 	    Date orderPerformFromDate, Date orderPerformToDate, String repAttD, String mobileNo,
 	    String demoPlan, Date demoFromDate, Date demoToDate, String itsHaveDiscount,
-	    String orderStatus, Date createdFromDate, Date createdToDate, String createdBy
+	    String paymentStatus, Date createdFromDate, Date createdToDate, String createdBy
 	);
 
 

@@ -402,7 +402,7 @@ async function updateOrderDetails(){
 	jsonObj['Total Amount'] = document.getElementById("fsm_Order_detail_total_amount").value;
 	jsonObj['Less Advance'] = document.getElementById("fsm_Order_detail_less_advance").value;
 	jsonObj['Balance'] = document.getElementById("fsm_Order_detail_balance").value;
-	jsonObj['Register Status'] = document.getElementById("fsm_Order_detail_approval_status").value;
+	jsonObj['Order Status'] = document.getElementById("fsm_Order_detail_approval_status").value;
 	jsonObj['Payment Mode'] = document.getElementById("fsm_order_detail_payment_mode").value;
 	jsonObj['Created Date'] = new Date().toISOString();
 	jsonObj['Created By'] = logginerUserId;  
@@ -540,8 +540,8 @@ function populateEditOrderDetailsVResponse(vResponseObj){
 		document.getElementById("fsm_Order_detail_total_amount").value = jsonObj['Total Amount'];
 		document.getElementById("fsm_Order_detail_less_advance").value = jsonObj['Less Advance'];
 		document.getElementById("fsm_Order_detail_balance").value = jsonObj['Balance'];
-		document.getElementById("fsm_Order_detail_approval_status").value = jsonObj['Register Status'];
-		toggleIfItsPartPay(jsonObj['Register Status']);
+		document.getElementById("fsm_Order_detail_approval_status").value = jsonObj['Order Status'];
+		toggleIfItsPartPay(jsonObj['Order Status']);
 		document.getElementById("fsm_order_detail_payment_mode").value = jsonObj['Payment Mode'] ;
 		document.getElementById("fsm_order_detail_payment_incharges").value = jsonObj['Payment Charges'];
 		document.getElementById("fsm_order_detail_payment_term_date").value = jsonObj['Payment Term Date'];

@@ -122,50 +122,6 @@ CREATE OR REPLACE FUNCTION generate_product_sequence() RETURNS TEXT AS $$
 $$ LANGUAGE plpgsql;
 
 
---DROP TABLE dar_details;
-CREATE TABLE dar_details(
-	id UUID   PRIMARY KEY
-	,dar_no VARCHAR
-	,dar_process_date TIMESTAMP		
-	,planned_activity TEXT		
-	,delivery_place_name_and_address TEXT
-	,state_cum_area VARCHAR
-	,client_name VARCHAR
-	,client_mobile_no VARCHAR
-	,about_the_client TEXT
-	,product_details TEXT
-	,from_location TEXT
-	,to_location TEXT
-	,total_expenses VARCHAR
-	,status_to_visit VARCHAR
-	,created_date TIMESTAMP
-	,created_by VARCHAR
-);
-
-
---DROP SEQUENCE IF EXISTS dar_sequence;
-CREATE SEQUENCE dar_sequence START 1 INCREMENT 1;
-
-CREATE OR REPLACE FUNCTION generate_dar_sequence() RETURNS TEXT AS $$
-	DECLARE
-	    seq_value INT;
-	BEGIN	    
-	    seq_value := nextval('dar_sequence');	    
-	    RETURN 'DAR_' || seq_value;
-	END;
-$$ LANGUAGE plpgsql;
-
-
-
-
---DROP TABLE dar_expenses_details;
-CREATE TABLE dar_expenses_details(
-	id UUID   PRIMARY KEY
-	,reference_id VARCHAR
-	,expenses_description VARCHAR
-	,expenses_amount NUMERIC		
-	,image_file_path VARCHAR	
-);
 
 
 --DROP TABLE estimation_details;
@@ -338,33 +294,6 @@ END;
 $BODY$;
 
 
---SELECT * FROM getFSMUserIdsBasedDarDetailsList('001,USR_2,USR_3');
-
-CREATE OR REPLACE FUNCTION public.getFSMUserIdsBasedDarDetailsList(userIds VARCHAR)
-																	RETURNS SETOF dar_details
-																	LANGUAGE 'plpgsql'
-																	VOLATILE
-																	PARALLEL UNSAFE
-																	COST 100
-																	ROWS 1000
-																	AS $BODY$
-	BEGIN
-    	
-
-
-	    	RETURN QUERY
-		    SELECT 
-		        m1.*
-		    FROM
-		        dar_details m1		    
-		    WHERE
-		    	lower(m1.created_by) ILIKE ANY(string_to_array(lower(userIds) || '%', ','))
-		     ORDER BY
-        		m1.created_date DESC;
-		        
-	END;
-
-$BODY$;
 
 --SELECT * FROM getFSMUserIdsBasedEstimationDetailsList('001,USR_2,USR_3');
 
@@ -536,63 +465,6 @@ CREATE OR REPLACE FUNCTION public.getFilterProductDetailsList(
 	END;
 $BODY$;
 
-/*****************************************Dar Filter**********************************************************/
-SELECT * FROM getFilterDarDetailsList('',null,null,'asdf','','','2024-10-20T00:00','2024-10-20T23:40','');
-
-
-SELECT * FROM getFilterDarDetailsList('',null,null,'','','',null,null,'');
-
-
-CREATE OR REPLACE FUNCTION public.getFilterDarDetailsList(
-														    darNo VARCHAR,
-														    darPerformFromDate TIMESTAMP,    
-														    darPerformToDate TIMESTAMP,    
-														    clientName VARCHAR,
-														    clientMobileNo VARCHAR,
-														    statusToVisit VARCHAR,
-														    createdFromDate TIMESTAMP,
-														    createdToDate TIMESTAMP,
-														    createdBy VARCHAR
-														)
-														RETURNS SETOF dar_details
-														LANGUAGE 'plpgsql'
-														VOLATILE
-														PARALLEL UNSAFE
-														COST 100
-														ROWS 1000
-														AS $BODY$
-		BEGIN
-		    RETURN QUERY
-		    SELECT 
-		        m1.*
-		    FROM
-		        dar_details m1
-		    WHERE
-		        (darNo IS NULL OR lower(m1.dar_no) ILIKE lower(darNo) || '%')                 	        
-		        AND (darPerformFromDate IS NULL OR darPerformToDate IS NULL OR m1.dar_process_date BETWEEN darPerformFromDate AND darPerformToDate)
-		        AND (clientName IS NULL OR lower(m1.client_name) ILIKE lower(clientName) || '%') 
-		        AND (clientMobileNo IS NULL OR lower(m1.client_mobile_no) ILIKE lower(clientMobileNo) || '%')
-		        AND (statusToVisit IS NULL OR lower(m1.status_to_visit) ILIKE lower(statusToVisit) || '%')      	             
-		        AND (createdFromDate IS NULL OR createdToDate IS NULL OR m1.created_date BETWEEN createdFromDate AND createdToDate)
-		        AND (createdBy IS NULL OR lower(m1.created_by) ILIKE lower(createdBy) || '%')
-		    ORDER BY
-		        m1.created_date DESC;
-		END;
-$BODY$;
-
-/*
-getFilterDarDetailsList(
-    $P{darNo}, 
-    $P{darPerformFromDate}, 
-    $P{darPerformToDate}, 
-    $P{clientName}, 
-    $P{clientMobileNo}, 
-    $P{statusToVisit}, 
-    $P{createdFromDate}, 
-    $P{createdToDate}, 
-    $P{createdBy}
-)
-*/
 
 /*****************************************EStimation Filter**********************************************************/
 SELECT * FROM getFilterEstimationDetailsList('','',null,null,'','','','','Estimation Enquiry',null,null,'');
@@ -713,6 +585,136 @@ CREATE TABLE default_properties(
 	,property_value VARCHAR		
 );
 
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+--DROP TABLE IF EXISTS dar_details CASCADE;
+CREATE TABLE dar_details(
+	id UUID   PRIMARY KEY
+	,dar_no VARCHAR
+	,dar_process_date TIMESTAMP		
+	,planned_activity TEXT		
+	,delivery_place_name_and_address TEXT
+	,state_cum_area VARCHAR
+	,client_name VARCHAR
+	,client_mobile_no VARCHAR
+	,about_the_client TEXT
+	,product_details TEXT
+	,from_location TEXT
+	,to_location TEXT
+	,total_expenses VARCHAR
+	,remarks VARCHAR
+	,status_to_visit VARCHAR
+	,created_date TIMESTAMP
+	,created_by VARCHAR
+);
+
+
+--DROP SEQUENCE IF EXISTS dar_sequence;
+CREATE SEQUENCE dar_sequence START 1 INCREMENT 1;
+
+CREATE OR REPLACE FUNCTION generate_dar_sequence() RETURNS TEXT AS $$
+	DECLARE
+	    seq_value INT;
+	BEGIN	    
+	    seq_value := nextval('dar_sequence');	    
+	    RETURN 'DAR_' || seq_value;
+	END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+--DROP TABLE dar_expenses_details;
+CREATE TABLE dar_expenses_details(
+	id UUID   PRIMARY KEY
+	,reference_id VARCHAR
+	,expenses_description VARCHAR
+	,expenses_amount NUMERIC		
+	,image_file_path VARCHAR	
+);
+
+
+--SELECT * FROM getFSMUserIdsBasedDarDetailsList('001,USR_2,USR_3');
+
+CREATE OR REPLACE FUNCTION public.getFSMUserIdsBasedDarDetailsList(userIds VARCHAR)
+																	RETURNS SETOF dar_details
+																	LANGUAGE 'plpgsql'
+																	VOLATILE
+																	PARALLEL UNSAFE
+																	COST 100
+																	ROWS 1000
+																	AS $BODY$
+	BEGIN
+    	
+
+
+	    	RETURN QUERY
+		    SELECT 
+		        m1.*
+		    FROM
+		        dar_details m1		    
+		    WHERE
+		    	lower(m1.created_by) ILIKE ANY(string_to_array(lower(userIds) || '%', ','))
+		     ORDER BY
+        		m1.created_date DESC;
+		        
+	END;
+
+$BODY$;
+
+
+
+ CREATE OR REPLACE FUNCTION public.getFilterDarDetailsList(
+     darNo VARCHAR,
+     darPerformFromDate TIMESTAMP,
+     darPerformToDate TIMESTAMP,
+     clientName VARCHAR,
+     clientMobileNo VARCHAR,
+     statusToVisit VARCHAR,
+     createdFromDate TIMESTAMP,
+     createdToDate TIMESTAMP,
+     createdBy VARCHAR
+ )
+ RETURNS SETOF dar_details
+ LANGUAGE 'plpgsql'
+ VOLATILE
+ PARALLEL UNSAFE
+ COST 100
+ ROWS 1000
+ AS $BODY$
+ BEGIN
+     RETURN QUERY
+     SELECT
+         m1.*
+     FROM
+         dar_details m1
+     WHERE
+         (darNo IS NULL OR lower(m1.dar_no) ILIKE lower(darNo) || '%')
+         AND (darPerformFromDate IS NULL OR darPerformToDate IS NULL OR m1.dar_process_date BETWEEN darPerformFromDate AND darPerformToDate)
+         AND (clientName IS NULL OR lower(m1.client_name) ILIKE lower(clientName) || '%')
+         AND (clientMobileNo IS NULL OR lower(m1.client_mobile_no) ILIKE lower(clientMobileNo) || '%')
+         AND (statusToVisit IS NULL OR lower(m1.status_to_visit) ILIKE lower(statusToVisit) || '%')                
+         AND (createdFromDate IS NULL OR createdToDate IS NULL OR m1.created_date BETWEEN createdFromDate AND createdToDate)
+         AND (createdBy IS NULL OR lower(m1.created_by) ILIKE lower(createdBy) || '%')
+     ORDER BY
+         m1.created_date DESC;
+ END;
+ $BODY$;
+
+
+
+
+
+
+
+
+
+
+
+
+
 Drop Table IF EXISTS payment_details CASCADE;
 CREATE TABLE payment_details(
  id                        uuid PRIMARY KEY, 
@@ -747,6 +749,7 @@ CREATE TABLE payment_details(
  less_advance               VARCHAR,
  balance                    VARCHAR,
  register_status            VARCHAR,
+ other_status_description   VARCHAR,
  delivery_city              VARCHAR,
  delivery_pin_code          VARCHAR,
  demo_piece_estimate        VARCHAR,
@@ -792,56 +795,68 @@ $BODY$;
 --SELECT * FROM getFilterPaymentDetailsList('','','','','','',null,null,'','','',null,null,'','','2024-10-21T00:00','2024-10-21T23:40','');																																																				
 
 CREATE OR REPLACE FUNCTION public.getFilterPaymentsDetailsList(
-														    eNo VARCHAR,
-														    estNo VARCHAR,
-														    orderNo VARCHAR,
-														    soNo VARCHAR,
-														    ddNo VARCHAR,
-														    customerName VARCHAR,
-														    orderPerformFromDate TIMESTAMP,    
-														    orderPerformToDate TIMESTAMP,    
-														    repAttD VARCHAR,                                                                                                                
-														    mobileNo VARCHAR,
-														    demoPlan VARCHAR,
-														    demoFromDate TIMESTAMP,
-														    demoToDate TIMESTAMP,
-														    itsHaveDiscount VARCHAR,
-														    orderStatus VARCHAR,
-														    createdFromDate TIMESTAMP,
-														    createdToDate TIMESTAMP,
-														    createdBy VARCHAR
-														)
-														RETURNS SETOF payment_details
-														LANGUAGE 'plpgsql'
-														VOLATILE
-														PARALLEL UNSAFE
-														COST 100
-														ROWS 1000
-														AS $BODY$
-				BEGIN
-				    RETURN QUERY
-				    SELECT 
-				        m1.*
-				    FROM
-				        payment_details m1
-				    WHERE
-				        (eNo IS NULL OR lower(m1.e_no) ILIKE lower(eNo) || '%') 
-				        AND (estNo IS NULL OR lower(m1.est_no) ILIKE lower(estNo) || '%') 
-				        AND (orderNo IS NULL OR lower(m1.order_no) ILIKE lower(orderNo) || '%')  
-				        AND (soNo IS NULL OR lower(m1.so_no) ILIKE lower(soNo) || '%')  
-				        AND (ddNo IS NULL OR lower(m1.d_d_no) ILIKE lower(ddNo) || '%')  
-				        AND (customerName IS NULL OR lower(m1.customer_name) ILIKE lower(customerName) || '%')        
-				        AND (orderPerformFromDate IS NULL OR orderPerformToDate IS NULL 
-				             OR m1.order_process_date BETWEEN orderPerformFromDate AND orderPerformToDate)                           
-				        AND (repAttD IS NULL OR lower(m1.rep_code) ILIKE lower(repAttD) || '%')                                 
-				        AND (mobileNo IS NULL OR lower(m1.customer_phone) ILIKE lower(mobileNo) || '%')
-				        AND (demoPlan IS NULL OR lower(m1.demo_plan) ILIKE lower(demoPlan) || '%')        
-				        AND (demoFromDate IS NULL OR demoToDate IS NULL OR m1.demo_date BETWEEN demoFromDate AND demoToDate)            
-				        AND (itsHaveDiscount IS NULL OR lower(m1.its_have_discount) ILIKE lower(itsHaveDiscount) || '%')                     
-				        AND (orderStatus IS NULL OR lower(m1.register_status) ILIKE lower(orderStatus) || '%')                              
-				        AND (createdFromDate IS NULL OR createdToDate IS NULL OR m1.created_date BETWEEN createdFromDate AND createdToDate)        
-				        AND (createdBy IS NULL OR lower(m1.created_by) ILIKE lower(createdBy) || '%')
-				    ORDER BY
-				        m1.created_date DESC;
-				END;
+															    eNo VARCHAR,
+															    estNo VARCHAR,
+															    orderNo VARCHAR,
+															    soNo VARCHAR,
+															    ddNo VARCHAR,
+															    customerName VARCHAR,
+															    orderPerformFromDate TIMESTAMP,    
+															    orderPerformToDate TIMESTAMP,    
+															    repAttD VARCHAR,                                                                                                                
+															    mobileNo VARCHAR,
+															    demoPlan VARCHAR,
+															    demoFromDate TIMESTAMP,
+															    demoToDate TIMESTAMP,
+															    itsHaveDiscount VARCHAR,
+															    paymentStatus VARCHAR,
+															    createdFromDate TIMESTAMP,
+															    createdToDate TIMESTAMP,
+															    createdBy VARCHAR
+															)
+															RETURNS SETOF payment_details
+															LANGUAGE 'plpgsql'
+															VOLATILE
+															PARALLEL UNSAFE
+															COST 100
+															ROWS 1000
+															AS $BODY$
+			BEGIN
+			    RETURN QUERY
+			    SELECT 
+			        m1.*
+			    FROM
+			        payment_details m1
+			    WHERE
+			        (eNo IS NULL OR lower(m1.e_no) ILIKE lower(eNo) || '%') 
+			        AND (estNo IS NULL OR lower(m1.est_no) ILIKE lower(estNo) || '%') 
+			        AND (orderNo IS NULL OR lower(m1.order_no) ILIKE lower(orderNo) || '%')  
+			        AND (soNo IS NULL OR lower(m1.so_no) ILIKE lower(soNo) || '%')  
+			        AND (ddNo IS NULL OR lower(m1.d_d_no) ILIKE lower(ddNo) || '%')  
+			        AND (customerName IS NULL OR lower(m1.customer_name) ILIKE lower(customerName) || '%')        
+			        AND (orderPerformFromDate IS NULL OR orderPerformToDate IS NULL 
+			             OR (m1.order_process_date BETWEEN orderPerformFromDate AND orderPerformToDate))                           
+			        AND (repAttD IS NULL OR lower(m1.rep_code) ILIKE lower(repAttD) || '%')                                 
+			        AND (mobileNo IS NULL OR lower(m1.customer_phone) ILIKE lower(mobileNo) || '%')
+			        AND (demoPlan IS NULL OR lower(m1.demo_plan) ILIKE lower(demoPlan) || '%')        
+			        AND (demoFromDate IS NULL OR demoToDate IS NULL OR (m1.demo_date BETWEEN demoFromDate AND demoToDate))            
+			        AND (itsHaveDiscount IS NULL OR lower(m1.its_have_discount) ILIKE lower(itsHaveDiscount) || '%')                     
+			        AND (paymentStatus IS NULL OR lower(m1.register_status) ILIKE lower(paymentStatus) || '%')                              
+			        AND (createdFromDate IS NULL OR createdToDate IS NULL OR (m1.created_date BETWEEN createdFromDate AND createdToDate))        
+			        AND (createdBy IS NULL OR lower(m1.created_by) ILIKE lower(createdBy) || '%')
+			    ORDER BY
+			        m1.created_date DESC;
+			END;
 $BODY$;
+
+/*
+
+DO $$
+BEGIN
+    PERFORM public.getFilterPaymentsDetailsList('eNoValue', NULL, NULL, ...);
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Error: %', SQLERRM;
+END;
+$$;
+
+*/
