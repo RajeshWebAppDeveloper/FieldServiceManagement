@@ -141,7 +141,7 @@ public class JasperReportRestController {
 	public ResponseEntity<Map<String, String>> exportJasperReportInDar(@RequestBody String payload) {
 	    Map<String, String> response = new HashMap<>();
 	    try (Connection connection = dbController.getConnection()) {
-	        System.out.println("/fsm/exportJasperReportInDar:::::");
+	        System.out.println("/fsm/exportJasperReportInDar:::::"+payload);
 	      
 	        JSONObject jObj = new JSONObject(payload);
 	        

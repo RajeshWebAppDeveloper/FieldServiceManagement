@@ -277,7 +277,7 @@ async function filterOrder() {
 
     await getDataFromServicePoint(url, jsonObj)
         .then(async data => await populateOrderListVResponse(data, "order_list_form"))
-        .catch(error => handleError(itemName, error));
+        .catch(error => handleErrorForList(itemName,error,'order_list_table_container'));
 };
 
 function clearOrderFilters() {

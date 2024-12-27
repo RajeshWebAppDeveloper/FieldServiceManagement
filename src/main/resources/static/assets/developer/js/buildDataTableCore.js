@@ -171,7 +171,7 @@ function createDataTableWithCheckboxEditAndDelete(responseData, editFunction, de
                     rowCell.innerHTML = `<img src="/assets/img/avatars/user.png" alt="Profile Image" width="50" height="50" style="border-radius:50px">`;
                 }
             } else if (imageOrStatusKeyJsonObj['status'] && rowKey == imageOrStatusKeyJsonObj['status']) {
-                let highlightClass = statusClassMapping[rowValue] || "";
+                let highlightClass = statusClassMapping[rowValue] || "badge badge-subtle-warning";
                 if (highlightClass) {
                     var statusSpanTag = document.createElement("SPAN");
                     statusSpanTag.setAttribute("class", highlightClass);
@@ -441,7 +441,7 @@ function createDataTableWithCheckbox_Delete_DropDown(responseData, exportFunctio
                     ? `<img src="/fsm/RetrieveFile/${rowValue}" alt="Profile Image" width="50" height="50" style="border-radius:50px">` 
                     : `<img src="/assets/img/avatars/user.png" alt="Profile Image" width="50" height="50" style="border-radius:50px">`;
             } else if (rowKey === imageOrStatusKeyJsonObj['status']) {
-                let highlightClass = statusClassMapping[rowValue] || "";
+                let highlightClass = statusClassMapping[rowValue] || "badge badge-subtle-warning";
                 rowCell.innerHTML = highlightClass 
                     ? `<span class="${highlightClass}" style="font-size:16px;font-weight:bold;">${rowValue}</span>` 
                     : rowValue;

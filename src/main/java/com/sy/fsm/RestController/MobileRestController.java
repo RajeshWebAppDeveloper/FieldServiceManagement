@@ -743,128 +743,130 @@ public class MobileRestController {
                Optional<MobileEstimationDetails> existingRecord = mobileEstimationDetailsRepository.findById(estimationId);	                
                if (existingRecord.isPresent()) {	                    
                 
-                MobileEstimationDetails newDetails = existingRecord.get();   
-                newDetails.setRegisterStatus(estimationStatus);
-                mobileEstimationDetailsRepository.save(newDetails);
-                if (estimationStatus.equalsIgnoreCase("Convert To Order")) {
-                		boolean orderProductConvertStatus = false;
-                		String sourceString = "";
-                    	Optional<MobileOrderDetails> existingOrderRecord = mobileOrderDetailsRepository.findByEstNo(newDetails.getEstNO());
-                    	if(existingOrderRecord.isPresent()) {
-                    		System.out.println("existingRecord found");
-                    		MobileOrderDetails orderDetails = existingOrderRecord.get();
-                    				orderDetails.seteNo("");  // Set fields according to your logic
-                                    orderDetails.setEstNo(newDetails.getEstNO());
-                                    orderDetails.setOrderNo(mobileOrderDetailsRepository.generateOrderSequence());
-                                    orderDetails.setSoNo("");
-                                    orderDetails.setDdNo("");
-                                    orderDetails.setCustomerName(newDetails.getCustomerName());
-                                    orderDetails.setOrderProcessDate(new Timestamp(System.currentTimeMillis())); // Proper timestamp
-                                    orderDetails.setRepCode(newDetails.getRepAttd());
-                                    orderDetails.setBillingName("");  // Set appropriate values or keep blank
-                                    orderDetails.setBillingAddress(newDetails.getBillingAddress());
-                                    orderDetails.setCustomerCity(newDetails.getBillingCity());
-                                    orderDetails.setCustomerPinCode(newDetails.getBillingPin());
-                                    orderDetails.setCustomerPhone(newDetails.getPhone());
-                                    orderDetails.setCustomerEmail(newDetails.getEmail());
-                                    orderDetails.setDeliveryCity(newDetails.getDeliveryCity());
-                                    orderDetails.setDemoPlan("");
-                                    orderDetails.setPaymentCharges("");
-                                    orderDetails.setPaymentTermDate(null);  // Assuming no payment date
-                                    orderDetails.setWarranty(newDetails.getWarranty());
-                                    orderDetails.setPanAndGst(newDetails.getPanGst());
-                                    orderDetails.setDemoDate(null);
-                                    orderDetails.setDeliveryAddress(newDetails.getDeliveryAddress());
-                                    orderDetails.setDeliveryPinCode(newDetails.getDeliveryPin());
-                                    orderDetails.setExpectedDate(null);
-                                    orderDetails.setShipModeName("");
-                                    orderDetails.setRemarks(newDetails.getRemarks());
-                                    orderDetails.setItsHaveDiscount(newDetails.getItsHaveDiscount());
-                                    orderDetails.setDiscountEstimate(newDetails.getDiscountEstimate());
-                                    orderDetails.setDemoPieceEstimate(newDetails.getDemoPieceEstimate());
-                                    orderDetails.setStockClearanceEstimate(newDetails.getStockClearanceEstimate());
-                                    orderDetails.setDiscountAmount(newDetails.getDiscountAmount());
-                                    orderDetails.setTotalProductAmount(newDetails.getTotalAmount());
-                                    orderDetails.setGst(newDetails.getGst());
-                                    orderDetails.setDeliveryCharges(newDetails.getDeliveryCharges());
-                                    orderDetails.setTotalAmount(newDetails.getTotalAmount());
-                                    orderDetails.setLessAdvance("");
-                                    orderDetails.setBalance("");
-                                    orderDetails.setRegisterStatus("New Order");
-                                    orderDetails.setCreatedDate(createdDate);
-                                    orderDetails.setCreatedBy(createdBy);
-                                    
-                                    mobileOrderDetailsRepository.save(orderDetails);
-                                    
-                                    sourceString =  mapper.writeValueAsString(orderDetails);
-                                    //orderProductConvertStatus = convertToOrderStatusUpdateProductsDetailsInMobile(estimationIdString,newDetails.getId().toString());
-                                    orderProductConvertStatus = true;
-                                    if(orderProductConvertStatus) {
-                                    	List<MobileOrderProductDetails> ordProductDetailsList = mobileOrderProductDetailsRepository.findByReferenceId(orderDetails.getId().toString());
-                    					String estProductSourceString = mapper.writeValueAsString(ordProductDetailsList);				
-                    					vResponse =  "{\"status\":\"true\",\"data\":"+sourceString+",\"ordProductData\":"+estProductSourceString+"}";
-                                	}else {
-                                		vResponse = "{\"status\":\"false\", \"message\":\"An error occurred.\"}";
-                                	}
-                    	}else {
-                    				System.out.println("new Record found");
-                                    MobileOrderDetails orderDetails = new MobileOrderDetails();
-                                    UUID orderId = UUID.randomUUID();
-                                    orderDetails.setId(orderId);
-                                    orderDetails.seteNo("");  // Set fields according to your logic
-                                    orderDetails.setEstNo(newDetails.getEstNO());
-                                    orderDetails.setOrderNo(mobileOrderDetailsRepository.generateOrderSequence());
-                                    orderDetails.setSoNo("");
-                                    orderDetails.setDdNo("");
-                                    orderDetails.setCustomerName(newDetails.getCustomerName());
-                                    orderDetails.setOrderProcessDate(new Timestamp(System.currentTimeMillis())); // Proper timestamp
-                                    orderDetails.setRepCode(newDetails.getRepAttd());
-                                    orderDetails.setBillingName("");  // Set appropriate values or keep blank
-                                    orderDetails.setBillingAddress(newDetails.getBillingAddress());
-                                    orderDetails.setCustomerCity(newDetails.getBillingCity());
-                                    orderDetails.setCustomerPinCode(newDetails.getBillingPin());
-                                    orderDetails.setCustomerPhone(newDetails.getPhone());
-                                    orderDetails.setCustomerEmail(newDetails.getEmail());
-                                    orderDetails.setDeliveryCity(newDetails.getDeliveryCity());
-                                    orderDetails.setDemoPlan("");
-                                    orderDetails.setPaymentCharges("");
-                                    orderDetails.setPaymentTermDate(null);  // Assuming no payment date
-                                    orderDetails.setWarranty(newDetails.getWarranty());
-                                    orderDetails.setPanAndGst(newDetails.getPanGst());
-                                    orderDetails.setDemoDate(null);
-                                    orderDetails.setDeliveryAddress(newDetails.getDeliveryAddress());
-                                    orderDetails.setDeliveryPinCode(newDetails.getDeliveryPin());
-                                    orderDetails.setExpectedDate(null);
-                                    orderDetails.setShipModeName("");
-                                    orderDetails.setRemarks(newDetails.getRemarks());
-                                    orderDetails.setItsHaveDiscount(newDetails.getItsHaveDiscount());
-                                    orderDetails.setDiscountEstimate(newDetails.getDiscountEstimate());
-                                    orderDetails.setDemoPieceEstimate(newDetails.getDemoPieceEstimate());
-                                    orderDetails.setStockClearanceEstimate(newDetails.getStockClearanceEstimate());
-                                    orderDetails.setDiscountAmount(newDetails.getDiscountAmount());
-                                    orderDetails.setTotalProductAmount(newDetails.getTotalAmount());
-                                    orderDetails.setGst(newDetails.getGst());
-                                    orderDetails.setDeliveryCharges(newDetails.getDeliveryCharges());
-                                    orderDetails.setTotalAmount(newDetails.getTotalAmount());
-                                    orderDetails.setLessAdvance("");
-                                    orderDetails.setBalance("");
-                                    orderDetails.setRegisterStatus("New Order");
-                                    orderDetails.setPaymentMode("");
-                                    mobileOrderDetailsRepository.save(orderDetails);
-                                    						
-                                    sourceString =  mapper.writeValueAsString(orderDetails);
-                                    orderProductConvertStatus = convertToOrderStatusUpdateProductsDetailsInMobile(estimationIdString,orderId.toString());
-                                    
-                                    if(orderProductConvertStatus) {
-                                    	List<MobileOrderProductDetails> ordProductDetailsList = mobileOrderProductDetailsRepository.findByReferenceId(orderId.toString());
-                    					String estProductSourceString = mapper.writeValueAsString(ordProductDetailsList);				
-                    					vResponse =  "{\"status\":\"true\",\"data\":"+sourceString+",\"ordProductData\":"+estProductSourceString+"}";
-                                	}else {
-                                		vResponse = "{\"status\":\"false\", \"message\":\"An error occurred.\"}";
-                                	}
-                    	}
-                    	
-                    } 	                            
+	                MobileEstimationDetails newDetails = existingRecord.get();   
+	                newDetails.setRegisterStatus(estimationStatus);
+	                mobileEstimationDetailsRepository.save(newDetails);
+	                if (estimationStatus.equalsIgnoreCase("Convert To Order")) {
+	                		boolean orderProductConvertStatus = false;
+	                		String sourceString = "";
+	                    	Optional<MobileOrderDetails> existingOrderRecord = mobileOrderDetailsRepository.findByEstNo(newDetails.getEstNO());
+	                    	if(existingOrderRecord.isPresent()) {
+	                    		System.out.println("existingRecord found");
+	                    		MobileOrderDetails orderDetails = existingOrderRecord.get();
+	                    				/*orderDetails.seteNo("");  // Set fields according to your logic
+	                                    orderDetails.setEstNo(newDetails.getEstNO());
+	                                    orderDetails.setOrderNo(mobileOrderDetailsRepository.generateOrderSequence());
+	                                    orderDetails.setSoNo("");
+	                                    orderDetails.setDdNo("");
+	                                    orderDetails.setCustomerName(newDetails.getCustomerName());
+	                                    orderDetails.setOrderProcessDate(new Timestamp(System.currentTimeMillis())); // Proper timestamp
+	                                    orderDetails.setRepCode(newDetails.getRepAttd());
+	                                    orderDetails.setBillingName("");  // Set appropriate values or keep blank
+	                                    orderDetails.setBillingAddress(newDetails.getBillingAddress());
+	                                    orderDetails.setCustomerCity(newDetails.getBillingCity());
+	                                    orderDetails.setCustomerPinCode(newDetails.getBillingPin());
+	                                    orderDetails.setCustomerPhone(newDetails.getPhone());
+	                                    orderDetails.setCustomerEmail(newDetails.getEmail());
+	                                    orderDetails.setDeliveryCity(newDetails.getDeliveryCity());
+	                                    orderDetails.setDemoPlan("");
+	                                    orderDetails.setPaymentCharges("");
+	                                    orderDetails.setPaymentTermDate(null);  // Assuming no payment date
+	                                    orderDetails.setWarranty(newDetails.getWarranty());
+	                                    orderDetails.setPanAndGst(newDetails.getPanGst());
+	                                    orderDetails.setDemoDate(null);
+	                                    orderDetails.setDeliveryAddress(newDetails.getDeliveryAddress());
+	                                    orderDetails.setDeliveryPinCode(newDetails.getDeliveryPin());
+	                                    orderDetails.setExpectedDate(null);
+	                                    orderDetails.setShipModeName("");
+	                                    orderDetails.setRemarks(newDetails.getRemarks());
+	                                    orderDetails.setItsHaveDiscount(newDetails.getItsHaveDiscount());
+	                                    orderDetails.setDiscountEstimate(newDetails.getDiscountEstimate());
+	                                    orderDetails.setDemoPieceEstimate(newDetails.getDemoPieceEstimate());
+	                                    orderDetails.setStockClearanceEstimate(newDetails.getStockClearanceEstimate());
+	                                    orderDetails.setDiscountAmount(newDetails.getDiscountAmount());
+	                                    orderDetails.setTotalProductAmount(newDetails.getTotalAmount());
+	                                    orderDetails.setGst(newDetails.getGst());
+	                                    orderDetails.setDeliveryCharges(newDetails.getDeliveryCharges());
+	                                    orderDetails.setTotalAmount(newDetails.getTotalAmount());
+	                                    orderDetails.setLessAdvance("");
+	                                    orderDetails.setBalance("");
+	                                    orderDetails.setRegisterStatus("New Order");
+	                                    orderDetails.setCreatedDate(createdDate);
+	                                    orderDetails.setCreatedBy(createdBy);*/
+	                    				
+			                    		
+		                                orderDetails.setOrderProcessDate(new Timestamp(System.currentTimeMillis())); 
+		                                mobileOrderDetailsRepository.save(orderDetails);
+	                                    
+	                                    sourceString =  mapper.writeValueAsString(orderDetails);
+	                                    //orderProductConvertStatus = convertToOrderStatusUpdateProductsDetailsInMobile(estimationIdString,newDetails.getId().toString());
+	                                    orderProductConvertStatus = true;
+	                                    if(orderProductConvertStatus) {
+	                                    	List<MobileOrderProductDetails> ordProductDetailsList = mobileOrderProductDetailsRepository.findByReferenceId(orderDetails.getId().toString());
+	                    					String estProductSourceString = mapper.writeValueAsString(ordProductDetailsList);				
+	                    					vResponse =  "{\"status\":\"true\",\"data\":"+sourceString+",\"ordProductData\":"+estProductSourceString+"}";
+	                                	}else {
+	                                		vResponse = "{\"status\":\"false\", \"message\":\"An error occurred.\"}";
+	                                	}
+	                    	}else {
+	                    				System.out.println("new Record found");
+	                                    MobileOrderDetails orderDetails = new MobileOrderDetails();
+	                                    UUID orderId = UUID.randomUUID();
+	                                    orderDetails.setId(orderId);
+	                                    orderDetails.seteNo("");  // Set fields according to your logic
+	                                    orderDetails.setEstNo(newDetails.getEstNO());
+	                                    orderDetails.setOrderNo(mobileOrderDetailsRepository.generateOrderSequence());
+	                                    orderDetails.setSoNo("");
+	                                    orderDetails.setDdNo("");
+	                                    orderDetails.setCustomerName(newDetails.getCustomerName());
+	                                    orderDetails.setOrderProcessDate(new Timestamp(System.currentTimeMillis())); // Proper timestamp
+	                                    orderDetails.setRepCode(newDetails.getRepAttd());
+	                                    orderDetails.setBillingName("");  // Set appropriate values or keep blank
+	                                    orderDetails.setBillingAddress(newDetails.getBillingAddress());
+	                                    orderDetails.setCustomerCity(newDetails.getBillingCity());
+	                                    orderDetails.setCustomerPinCode(newDetails.getBillingPin());
+	                                    orderDetails.setCustomerPhone(newDetails.getPhone());
+	                                    orderDetails.setCustomerEmail(newDetails.getEmail());
+	                                    orderDetails.setDeliveryCity(newDetails.getDeliveryCity());
+	                                    orderDetails.setDemoPlan("");
+	                                    orderDetails.setPaymentCharges("");
+	                                    orderDetails.setPaymentTermDate(null);  // Assuming no payment date
+	                                    orderDetails.setWarranty(newDetails.getWarranty());
+	                                    orderDetails.setPanAndGst(newDetails.getPanGst());
+	                                    orderDetails.setDemoDate(null);
+	                                    orderDetails.setDeliveryAddress(newDetails.getDeliveryAddress());
+	                                    orderDetails.setDeliveryPinCode(newDetails.getDeliveryPin());
+	                                    orderDetails.setExpectedDate(null);
+	                                    orderDetails.setShipModeName("");
+	                                    orderDetails.setRemarks(newDetails.getRemarks());
+	                                    orderDetails.setItsHaveDiscount(newDetails.getItsHaveDiscount());
+	                                    orderDetails.setDiscountEstimate(newDetails.getDiscountEstimate());
+	                                    orderDetails.setDemoPieceEstimate(newDetails.getDemoPieceEstimate());
+	                                    orderDetails.setStockClearanceEstimate(newDetails.getStockClearanceEstimate());
+	                                    orderDetails.setDiscountAmount(newDetails.getDiscountAmount());
+	                                    orderDetails.setTotalProductAmount(newDetails.getTotalAmount());
+	                                    orderDetails.setGst(newDetails.getGst());
+	                                    orderDetails.setDeliveryCharges(newDetails.getDeliveryCharges());
+	                                    orderDetails.setTotalAmount(newDetails.getTotalAmount());
+	                                    orderDetails.setLessAdvance("");
+	                                    orderDetails.setBalance("");
+	                                    orderDetails.setRegisterStatus("New Order");
+	                                    orderDetails.setPaymentMode("");
+	                                    mobileOrderDetailsRepository.save(orderDetails);
+	                                    						
+	                                    sourceString =  mapper.writeValueAsString(orderDetails);
+	                                    orderProductConvertStatus = convertToOrderStatusUpdateProductsDetailsInMobile(estimationIdString,orderId.toString());
+	                                    
+	                                    if(orderProductConvertStatus) {
+	                                    	List<MobileOrderProductDetails> ordProductDetailsList = mobileOrderProductDetailsRepository.findByReferenceId(orderId.toString());
+	                    					String estProductSourceString = mapper.writeValueAsString(ordProductDetailsList);				
+	                    					vResponse =  "{\"status\":\"true\",\"data\":"+sourceString+",\"ordProductData\":"+estProductSourceString+"}";
+	                                	}else {
+	                                		vResponse = "{\"status\":\"false\", \"message\":\"An error occurred.\"}";
+	                                	}
+	                    	}
+	                    	
+	                    } 	                            
                }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1067,15 +1069,33 @@ public class MobileRestController {
 		String vResponse =  "{\"status\":\"false\"}";
 		try {
 			System.out.println("/fsm/deleteMobileOrderProductsDetails::::::::::"+payload);
+			ObjectMapper mapper = new ObjectMapper();
 			JSONObject jObj = new JSONObject(payload);
-			String idString = jObj.getString("id");
+			String idString = jObj.getString("orderProductId");
+			String orderIdString = jObj.getString("orderId");
 			System.out.println("idString ::"+idString);
 			UUID id = UUID.fromString(idString);			
 			Optional<MobileOrderProductDetails> ordProductDetailsRecord = mobileOrderProductDetailsRepository.findById(id);			
 			if(ordProductDetailsRecord.isPresent()){
 				System.out.println("its present.....");
-				MobileOrderProductDetails estProductDetails = ordProductDetailsRecord.get();
-				mobileOrderProductDetailsRepository.delete(estProductDetails);						
+				MobileOrderProductDetails ordProductDetails = ordProductDetailsRecord.get();
+				mobileOrderProductDetailsRepository.delete(ordProductDetails);
+				
+				int totalProductAmount= mobileOrderProductDetailsRepository.findByReferenceIdAndResetTotalProduct(orderIdString);
+				System.out.println("totalProductAmount ::"+totalProductAmount);
+				UUID orderId = UUID.fromString(orderIdString);
+				Optional<MobileOrderDetails> existingDetailsRecord = mobileOrderDetailsRepository.findById(orderId);			
+				if(existingDetailsRecord.isPresent()){					
+					MobileOrderDetails ordDetails = existingDetailsRecord.get();
+					System.out.println("delete Reset Again");
+					ordDetails.setTotalProductAmount(totalProductAmount+"");
+					int finalTotalOrderAmount = totalProductAmount+Integer.parseInt(ordDetails.getDeliveryCharges())+Integer.parseInt(ordDetails.getGst());
+					ordDetails.setTotalAmount(finalTotalOrderAmount+"");
+					mobileOrderDetailsRepository.save(ordDetails);
+					
+					String sourceString = mapper.writeValueAsString(ordDetails);
+					System.out.println("sourceString  :::"+sourceString);
+				}
 				vResponse =  "{\"status\":\"true\"}";
 			}
 			

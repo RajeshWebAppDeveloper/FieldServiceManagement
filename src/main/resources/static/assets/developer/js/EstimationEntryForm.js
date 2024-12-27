@@ -226,9 +226,9 @@ function getEstimationEntryForm(showType){
 														<table class="table table-center table-hover datatable">
 															<thead class="thead-light">
 															    <tr>
-																	<td colspan="5" class="form-label">GST:</td>
+																	<td colspan="5" class="form-label">GST Amount:</td>
 								                                    <td colspan="3">
-								                                    	<input type="text" class="form-control" id="fsm_Estimation_detail_gst" name="GST">
+								                                    	<input type="text" class="form-control" id="fsm_Estimation_detail_gst" name="GST Amount">
 								                                    </td>                    
 											                	</tr>     
 								                                <tr>
@@ -342,7 +342,7 @@ async function updateEstimationDetails(){
 	    jsonObj['Delivery Pin Code'] = document.getElementById("fsm_Estimation_detail_delivery_pin_code").value;  
 	    jsonObj['Warranty'] = document.getElementById("fsm_Estimation_detail_warrantly").value;
 	    jsonObj['Pan / GST'] = document.getElementById("fsm_Estimation_detail_Pan_and_gst").value;
-	    jsonObj['Total Product'] = document.getElementById("estimation_total_product_id").innerText;
+	    jsonObj['Total Product'] = document.getElementById("estimation_total_product_id").innerHTML;
 	    jsonObj['Ref'] = document.getElementById("fsm_Estimation_detail_ref").value;
 	    jsonObj['Remarks'] = document.getElementById("fsm_Estimation_detail_remarks").value;
 	    jsonObj['Its Have Discount'] = document.getElementById("fsm_Estimation_detail_its_have_discount").value;
@@ -398,7 +398,7 @@ function clearEstimationDetails(){
 	document.getElementById("fsm_Estimation_detail_delivery_pin_code").value = "";  // Note: There are two fields with the same ID, this might cause issues
 	document.getElementById("fsm_Estimation_detail_warrantly").value = "";
 	document.getElementById("fsm_Estimation_detail_Pan_and_gst").value = "";
-	document.getElementById("estimation_total_product_id").innerText = "0.00";
+	document.getElementById("estimation_total_product_id").innerHTML = "0.00";
 	document.getElementById("fsm_Estimation_detail_ref").value = "";
 	document.getElementById("fsm_Estimation_detail_its_have_discount").value = "";
 	document.getElementById("fsm_Estimation_detail_remarks").value = "";
@@ -460,7 +460,7 @@ function populateEditEstimationDetailsVResponse(vResponseObj){
     document.getElementById("fsm_Estimation_detail_delivery_pin_code").value = jsonObj['Delivery Pin Code'];  
     document.getElementById("fsm_Estimation_detail_warrantly").value = jsonObj['Warranty'];
     document.getElementById("fsm_Estimation_detail_Pan_and_gst").value = jsonObj['Pan / GST'];
-    document.getElementById("estimation_total_product_id").innerText = jsonObj['Total Product'];
+    document.getElementById("estimation_total_product_id").innerHTML = jsonObj['Total Product'];
     document.getElementById("fsm_Estimation_detail_ref").value = jsonObj['Ref'];
     document.getElementById("fsm_Estimation_detail_remarks").value = jsonObj['Remarks'];
     document.getElementById("fsm_Estimation_detail_its_have_discount").value = jsonObj['Its Have Discount'];
@@ -551,6 +551,7 @@ function calculateRowTotal(inputElement) {
 
 
 function updateTotalProducts() {
+	
     let totalProductAmount = 0;
     const rows = document.querySelectorAll("#estimation_product_tbody_id tr");
 
@@ -560,8 +561,13 @@ function updateTotalProducts() {
             totalProductAmount += parseFloat(totalInput.value) || 0;
         }
     });
-
-    document.getElementById("estimation_total_product_id").innerText = totalProductAmount.toFixed(2);
+	
+    document.getElementById("estimation_total_product_id").innerHTML = totalProductAmount.toFixed(2);
+	
+	var discountAmount = Number(document.getElementById("fsm_Estimation_detail_discount_amount").value || "0.00");
+	var orderGstAmount = Number(document.getElementById("fsm_Order_detail_gst").value || "0.00");
+	var deliveryAmount = Number(document.getElementById("fsm_Order_detail_delivery_charges").value || "0.00");
+	document.getElementById("fsm_Order_detail_total_amount").value = totalProductAmount.toFixed(2) + orderGstAmount + deliveryAmount;
 };
 
 

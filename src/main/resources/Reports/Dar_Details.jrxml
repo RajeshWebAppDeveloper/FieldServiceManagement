@@ -422,7 +422,7 @@ getFilterDarDetailsList(
 		</element>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="43" splitType="Stretch">
 			<element kind="textField" uuid="50c3ee21-3ebc-4cf1-a6c9-8697afffa631" x="47" y="0" width="43" height="30" fontName="DejaVu Serif" bold="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{dar_no}]]></expression>
 				<box>
@@ -578,33 +578,25 @@ getFilterDarDetailsList(
 			</element>
 		</band>
 	</detail>
-	<lastPageFooter height="46">
-		<element kind="rectangle" uuid="8ec7b069-bc8c-474f-a42c-3a0aecfa720c" x="0" y="10" width="1960" height="31" backcolor="#C3C2FC">
-			<pen lineWidth="0.0"/>
-		</element>
-		<element kind="staticText" uuid="70652c82-6b48-406f-9e35-47edf6158a4a" x="1" y="9" width="1699" height="33" forecolor="#FFFFFF" fontName="DejaVu Sans" bold="true" hTextAlign="Right" vTextAlign="Middle">
-			<text><![CDATA[Sub Total      :]]></text>
-			<box>
-				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-			</box>
-		</element>
-		<element kind="textField" uuid="0f15d1ab-32c5-415c-971d-d4a59b82c04d" x="1700" y="9" width="250" height="33" fontName="DejaVu Serif" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Column header">
+	<lastPageFooter height="44">
+		<element kind="textField" uuid="0f15d1ab-32c5-415c-971d-d4a59b82c04d" x="1830" y="0" width="130" height="33" forecolor="#000000" fontName="DejaVu Serif" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle" style="Column header">
 			<expression><![CDATA[$V{parameterBasedExpensesFinalTotal}]]></expression>
 			<box style="Column header">
-				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="line" uuid="cad0fe9e-6529-4de0-8d29-a98796f84f84" x="0" y="42" width="1960" height="1" forecolor="#9D94F7">
-			<pen lineWidth="2.0"/>
-		</element>
-		<element kind="line" uuid="dbe9ea1a-0f51-45e8-b1c1-49859ba79236" x="0" y="10" width="1960" height="1" forecolor="#9D94F7">
-			<pen lineWidth="2.0"/>
+		<element kind="staticText" uuid="178338f8-4105-4bcc-91f3-2fb56cb804c6" x="0" y="0" width="1830" height="33" forecolor="#000000" fontName="DejaVu Sans" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Total :]]></text>
+			<box>
+				<pen lineColor="#FFFFFF"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
 		</element>
 	</lastPageFooter>
 	<summary splitType="Stretch"/>

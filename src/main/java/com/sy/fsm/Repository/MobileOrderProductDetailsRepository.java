@@ -27,4 +27,7 @@ public interface MobileOrderProductDetailsRepository extends JpaRepository<Mobil
 	
 	@Query(value = "SELECT * from order_product_details WHERE reference_id = :referenceId",nativeQuery = true)
 	List<MobileOrderProductDetails> findByReferenceId(String referenceId);
+	
+	@Query(value = "SELECT sum(total) from order_product_details WHERE reference_id = :referenceId",nativeQuery = true)
+	int findByReferenceIdAndResetTotalProduct(String referenceId);
 }

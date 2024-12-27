@@ -59,7 +59,7 @@ function getOrderEntryForm(showType){
                                         <div class="mb-3">
                                             <label for="fsm_order_detail_e_no" class="form-label">E.No</label>
                                             <input type="hidden" class="form-control" id="fsm_Order_detail_uuid_id" >
-											<input type="hidden" class="form-control" id="fsm_Order_detail_d_d_no" >
+											
                                           <input type="hidden" class="form-control" id="fsm_Order_detail_rep_attd" >
                                             <input type="hidden" class="form-control" id="fsm_Order_detail_delivery_city">  
                                             <input type="hidden" class="form-control" id="fsm_Order_detail_delivery_pin_code" >                                        
@@ -80,7 +80,10 @@ function getOrderEntryForm(showType){
                                             <label for="fsm_order_detail_est_no" class="form-label">Est No</label>
                                             <input type="text" class="form-control" id="fsm_order_detail_est_no" name="Est No" placeholder="Enter Est No" disabled>
                                         </div>
-
+										<div class="mb-3">
+                                            <label for="fsm_Order_detail_d_d_no" class="form-label">D.D No </label>                                            
+											<input type="text" class="form-control" id="fsm_Order_detail_d_d_no" name="D.D No" placeholder="Enter D.D.No">
+                                        </div>
                                         <div class="mb-3">
                                             <label for="fsm_order_detail_customer_name" class="form-label">Customer Name</label>
                                             <input type="text" class="form-control" id="fsm_order_detail_customer_name" name="Customer Name" placeholder="Enter Customer Name">
@@ -245,17 +248,17 @@ function getOrderEntryForm(showType){
                                                             <tr>
                                                                 <td class="form-label">Total Product Amount:</td>
                                                                 <td colspan="4">
-                                                                    <input type="text" class="form-control" id="fsm_Order_detail_total_product_amount" name="Total Product Amount">
+                                                                    <input type="text" class="form-control" id="fsm_Order_detail_total_product_amount" name="Total Product Amount" disabled>
                                                                 </td>
-                                                                <td class="form-label">GST:</td>
+                                                                <td class="form-label">GST Amount:</td>
                                                                 <td colspan="3">
-                                                                    <input type="text" class="form-control" id="fsm_Order_detail_gst" name="GST">
+                                                                    <input type="text" class="form-control" id="fsm_Order_detail_gst" name="GST Amount" onkeyup="updateTotalOrderProducts()">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="form-label">Delivery Charges:</td>
                                                                 <td colspan="4">
-                                                                    <input type="text" class="form-control" id="fsm_Order_detail_delivery_charges" name="Delivery Charges">
+                                                                    <input type="text" class="form-control" id="fsm_Order_detail_delivery_charges" name="Delivery Charges" onkeyup="updateTotalOrderProducts()">
                                                                 </td>
                                                                 <td class="form-label">Total Amount:</td>
                                                                 <td colspan="3">
@@ -393,7 +396,7 @@ async function updateOrderDetails(){
 	jsonObj['Demo Date'] = document.getElementById("fsm_order_detail_demo_date").value;
 	jsonObj['Warranty'] = document.getElementById("fsm_order_detail_warranty").value;
 	jsonObj['PAN / GST'] = document.getElementById("fsm_order_detail_pan_and_gst").value;
-	jsonObj['Total Product Amount'] = document.getElementById("order_total_product_id").innerText;
+	jsonObj['Total Product Amount'] = document.getElementById("order_total_product_id").innerHTML;
 	jsonObj['Remarks'] = document.getElementById("fsm_Order_detail_remarks").value;
 	jsonObj['Ship Mode Name'] = document.getElementById("fsm_Order_detail_ship_mode_name").value;
 	jsonObj['Expected Date'] = document.getElementById("fsm_Order_detail_expected_date").value;
@@ -459,7 +462,7 @@ function clearOrderDetails(){
 	document.getElementById("fsm_order_detail_demo_date").value = "";
 	document.getElementById("fsm_order_detail_warranty").value = "";
 	document.getElementById("fsm_order_detail_pan_and_gst").value = "";
-	document.getElementById("order_total_product_id").innerText = "";  // Assuming you want to clear this text
+	document.getElementById("order_total_product_id").innerHTML = "";  // Assuming you want to clear this text
 	document.getElementById("fsm_Order_detail_remarks").value = "";
 	document.getElementById("fsm_Order_detail_ship_mode_name").value = "";
 	document.getElementById("fsm_Order_detail_expected_date").value = "";
@@ -530,7 +533,7 @@ function populateEditOrderDetailsVResponse(vResponseObj){
 		document.getElementById("fsm_order_detail_demo_date").value = jsonObj['Demo Date'];
 		document.getElementById("fsm_order_detail_warranty").value = jsonObj['Warranty'];
 		document.getElementById("fsm_order_detail_pan_and_gst").value = jsonObj['PAN / GST'];
-		document.getElementById("order_total_product_id").innerText = jsonObj['Total Product Amount'];
+		document.getElementById("order_total_product_id").innerHTML = jsonObj['Total Product Amount'];
 		document.getElementById("fsm_Order_detail_total_product_amount").value = jsonObj['Total Product Amount'];
 		document.getElementById("fsm_Order_detail_remarks").value = jsonObj['Remarks'];
 		document.getElementById("fsm_Order_detail_ship_mode_name").value = jsonObj['Ship Mode Name'];
@@ -597,12 +600,12 @@ function dynamicOrderProductRow() {
     newRow.innerHTML = `<td><input 
             type="hidden" name="ID" class="form-control" placeholder="UUID" /><input 
             type="hidden" name="ReferenceID" class="form-control" value="${orderId}" />
-            ${newOrderProductCounter}</td><td><select class="form-select" name="ProductType"><option></option><option>stock</option><option>salse</option></select></td><td><input 
+            ${newOrderProductCounter}</td><td><select class="form-select" name="ProductType"><option></option><option>Stock</option><option>Sales</option></select></td><td><input 
             type="text" name="ProductDetails" list="product_name_list_datalist_tag" class="form-control" placeholder="Product Name" onkeyPress="allowEnterKeyOnlyForLoadOrderProductDetails(event,'ProductName',this)" /></td><td><input 
             type="text" name="ProductCode" list="product_id_list_datalist_tag"  class="form-control" placeholder="Pdt.sl.code" onkeyPress="allowEnterKeyOnlyForLoadOrderProductDetails(event,'ProductID',this)" /></td><td><input 
-            type="number" name="ProductQty" class="form-control" placeholder="0.00" min="0" onkeypress="onlyNumberKey(event)" onkeyup="calculateRowTotal(this)" /></td><td><input 
-            type="number" name="ProductUnitPrice" class="form-control" placeholder="0.00" min="0" onkeypress="onlyNumberKey(event)" onkeyup="calculateRowTotal(this)" /></td><td><input 
-            type="number" name="ProductTax" class="form-control" placeholder="0.00" min="0" onkeypress="onlyNumberKey(event)" onkeyup="calculateRowTotal(this)" /></td><td><input 
+            type="number" name="ProductQty" class="form-control" placeholder="0.00" min="0" onkeypress="onlyNumberKey(event)" onkeyup="calculateRowOrderTotal(this)" /></td><td><input 
+            type="number" name="ProductUnitPrice" class="form-control" placeholder="0.00" min="0" onkeypress="onlyNumberKey(event)" onkeyup="calculateRowOrderTotal(this)" /></td><td><input 
+            type="number" name="ProductTax" class="form-control" placeholder="0.00" min="0" onkeypress="onlyNumberKey(event)" onkeyup="calculateRowOrderTotal(this)" /></td><td><input 
             type="number" name="ProductTotal" class="form-control" placeholder="0.00" onkeypress="onlyNumberKey(event)" readonly /></td><td><button 
             type="button" class="btn btn-danger" onclick="deleteOrderProductsDetails(this)">Delete</button></td>`;
 
@@ -612,7 +615,7 @@ function dynamicOrderProductRow() {
     updateTotalOrderProducts();
 };
 
-function calculateRowTotal(inputElement) {
+function calculateRowOrderTotal(inputElement) {
     const row = inputElement.closest("tr");
     const qty = parseFloat(row.querySelector('input[name="ProductQty"]').value) || 0;
     const unitPrice = parseFloat(row.querySelector('input[name="ProductUnitPrice"]').value) || 0;
@@ -636,8 +639,11 @@ function updateTotalOrderProducts() {
         }
     });
 
-    document.getElementById("order_total_product_id").innerText = totalProductAmount.toFixed(2);
+    document.getElementById("order_total_product_id").innerHTML= totalProductAmount.toFixed(2);
 	document.getElementById("fsm_Order_detail_total_product_amount").value = totalProductAmount.toFixed(2);
+	var orderGstAmount = Number(document.getElementById("fsm_Order_detail_gst").value || "0.00");
+	var deliveryAmount = Number(document.getElementById("fsm_Order_detail_delivery_charges").value || "0.00");
+	document.getElementById("fsm_Order_detail_total_amount").value = totalProductAmount.toFixed(2) + orderGstAmount + deliveryAmount;
 };
 
 
@@ -648,11 +654,11 @@ function loadOrderProductRowsFromJson(jsonData) {
 
     jsonData.forEach((item) => {
         const newRow = document.createElement("tr");
-		var options = `<option></option><option>Stock</option><option>Sale</option>`;
+		var options = `<option></option><option>Stock</option><option>Sales</option>`;
 		if(item['Product Type'] == "stock"){
-			options = `<option></option><option selected>Stock</option><option>Sale</option>`;
-		}else if(item['Product Type'] == "sale"){
-			options = `<option></option><option>Stock</option><option selected>Sale</option>`;
+			options = `<option></option><option selected>Stock</option><option>Sales</option>`;
+		}else if(item['Product Type'] == "sales"){
+			options = `<option></option><option>Stock</option><option selected>Sales</option>`;
 		}
         newRow.innerHTML = `<td><input 
                 type="hidden" name="ID" class="form-control" value="${item['ID']}" placeholder="ID" /><input 
@@ -660,9 +666,9 @@ function loadOrderProductRowsFromJson(jsonData) {
                 ${productCounter}</td><td><select name="ProductType" class="form-select">${options}</select></td><td><input 
                 type="text" name="ProductDetails" class="form-control" list="product_name_list_datalist_tag" value="${item['Product Details']}" placeholder="Product Details" onkeyPress="allowEnterKeyOnlyForLoadOrderProductDetails(event,'ProductName',this)" /></td><td><input 
                 type="text" name="ProductCode" class="form-control" list="product_id_list_datalist_tag" value="${item['Product Code'] || ''}" placeholder="Pdt.sl.code" onkeyPress="allowEnterKeyOnlyForLoadOrderProductDetails(event,'ProductId',this)"/></td><td><input 
-                type="number" name="ProductQty" class="form-control" value="${item['Qty'] || 0}" placeholder="Qty" min="0" onkeyup="calculateRowTotal(this)" /></td><td><input 
-                type="number" name="ProductUnitPrice" class="form-control" value="${item['Unit Price'] || 0}" placeholder="Unit Price" min="0" onkeyup="calculateRowTotal(this)" /></td><td><input 
-                type="number" name="ProductTax" class="form-control" value="${item['Tax'] || 0}" placeholder="Tax" min="0" onkeyup="calculateRowTotal(this)" /></td><td><input type="number" name="ProductTotal" class="form-control" value="${item['Total'] || 0}" placeholder="Total" readonly /></td><td><button 
+                type="number" name="ProductQty" class="form-control" value="${item['Qty'] || 0}" placeholder="Qty" min="0" onkeyup="calculateRowOrderTotal(this)" /></td><td><input 
+                type="number" name="ProductUnitPrice" class="form-control" value="${item['Unit Price'] || 0}" placeholder="Unit Price" min="0" onkeyup="calculateRowOrderTotal(this)" /></td><td><input 
+                type="number" name="ProductTax" class="form-control" value="${item['Tax'] || 0}" placeholder="Tax" min="0" onkeyup="calculateRowOrderTotal(this)" /></td><td><input type="number" name="ProductTotal" class="form-control" value="${item['Total'] || 0}" placeholder="Total" readonly /></td><td><button 
                 type="button" class="btn btn-danger" onclick="deleteOrderProductsDetails(this)">Delete</button></td>`;
 
         tbody.appendChild(newRow);
@@ -739,7 +745,8 @@ async function deleteOrderProductsDetails(vObj){
     var id = vObj.parentNode.parentNode.childNodes[0].childNodes[0].value;
     if( id!= ""){
         var jsonObj = JSON.parse("{}"); 
-        jsonObj['ID'] = id; 
+        jsonObj['orderProductId'] = id;
+		jsonObj['orderId'] = document.getElementById("fsm_Order_detail_uuid_id").value; 
             
         swal({
                 title: "Confirmation",

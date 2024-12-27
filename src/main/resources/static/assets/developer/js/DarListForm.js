@@ -46,8 +46,8 @@ function getDarListForm(){
 									    <label for="dar_list_filter_statusToVisit" class="form-label">Status to Visit</label>
 									    <select class="form-select" id="dar_list_filter_statusToVisit" name="statusinvisit">
 									        <option value="">-- Select Status --</option>
-									        <option>Demo success</option>
-									        <option>Product delivered</option>									        
+									        <option>Demo Success</option>
+									        <option>Product Delivered</option>									        
 									    </select>
 									</div>
 
@@ -107,7 +107,8 @@ function showDarListForm(backMethod){
         document.getElementById(containerId).style.display = "block";
 		if(backMethod != "true"){		
 			getDarList(containerId);	
-		}							
+		}		
+							
 		createOptionTagInSelectTag("dar_list_filter_statusToVisit",dar_StatusToVisitArrayString);		
     }catch(exp){
         alert(exp);
@@ -139,8 +140,8 @@ async function populateDarListVResponse(vResponse,containerId){
 				status:"Status To Visit"
 			};
 			var statusClassMapping = {
-				"Demo success":"badge badge-subtle-info"
-				,"Product delivered":"badge badge-subtle-success"
+				"Demo Success":"badge badge-subtle-info"
+				,"Product Delivered":"badge badge-subtle-success"
 			};
 			var tableId = containerId+"_table_id";		
 			document.getElementById("dar_list_table_container").innerHTML = await createDataTableWithCheckboxEditAndDelete(vResponse, editFunction, deleteFunction, tableId, selectRecordStr, idField, imageOrStatusKeyJsonObj,statusClassMapping);
@@ -213,7 +214,7 @@ async function filterDar() {
 
         await getDataFromServicePoint(url, jsonObj)
             .then(async data => await populateDarListVResponse(data, "dar_list_form"))
-            .catch(error => handleError(itemName, error));
+            .catch(error => handleErrorForList(itemName,error,'dar_list_table_container'));
     }
 };
 

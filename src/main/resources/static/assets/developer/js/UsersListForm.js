@@ -193,7 +193,7 @@ async function filterUsers(){
         const itemName = "getFilterUsersDetailsList";
         await getDataFromServicePoint(url, jsonObj)
             .then(async data => await populateUsersListVResponse(data, "users_list_form"))
-            .catch(error => handleError(itemName, error));
+            .catch(error => handleErrorForList(itemName,error,'users_list_table_container'));
     }
 };
 

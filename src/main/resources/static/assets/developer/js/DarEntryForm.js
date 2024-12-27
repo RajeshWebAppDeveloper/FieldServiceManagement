@@ -518,7 +518,7 @@ function dynamicExpenseRow() {
     imagePreview.style.height = '500px';
     imagePreview.style.objectFit = 'cover';
     imagePreview.style.display = 'none'; 
-    imagePreview.src = '#'; 
+    imagePreview.src = ''; 
 
     const imageInput = document.createElement('input');
     imageInput.type = 'file';
@@ -560,51 +560,58 @@ async function updateDarExpensesDetails() {
 
     let expensesArray = [];
 
-    rows.forEach((row, index) => {
+    for(const row of rows) {
         const expensesId = row.querySelector('input[name="id"]').value;
         const expensesReferenceId = row.querySelector('input[name="reference_id"]').value;
         const description = row.querySelector('input[name="expenseDescription"]').value;
         const amount = row.querySelector('input[name="expenseAmount"]').value;
         const imageInput = row.querySelector('input[name="expenseImage"]');
-		if(imageInput.value != ""){
-			const imageFile = imageInput.files[0];        
-	        const expenseData = {
-	            "ID": expensesId,
-	            "Reference ID": expensesReferenceId,
-	            "Expenses Description": description,
-	            "Expenses Amount": amount,
-				"Image File Path":""
-	        };
-	
-	        expensesArray.push(expenseData);
-	
-	        
-	        if (imageFile) {
-	            formData.append(`imageFiles`, imageFile);
-	        }
+        if (imageInput.previousSibling.src !== "") {
+            const imageFile = imageInput.files[0];
+            const expenseData = {
+                "ID": expensesId,
+                "Reference ID": expensesReferenceId,
+                "Expenses Description": description,
+                "Expenses Amount": amount,
+                "Image File Path": ""
+            };
 
-		}else{									        
-			showDarListForm('');
-			return;		
-		}
-     });
+            expensesArray.push(expenseData);
+
+            if (imageFile) {
+                formData.append(`imageFiles`, imageFile);
+            }
+        } else {
+            toastr.warning(`${description}:::Images Not Uploaded..`, "Warning", {
+                closeButton: true,
+                tapToDismiss: false
+            });
+            return; 
+        }
+    }
 
     formData.append("expenses", JSON.stringify(expensesArray));
-	
-    try {       
+
+    try {
         const response = await fetch('/fsm/updateDarExpensesDetails', {
             method: 'POST',
             body: formData
         });
 
         if (response.ok) {
-            const vResponseObj = await response.json();            
-			if(vResponseObj.status === "true"){
-				toastr.success("Successfully Updated", "Completed", {closeButton: !0,tapToDismiss: !1});						        
-				showDarListForm('');		
-			} else {
-				toastr.warning("Invalid Dar Details", "Warning", {closeButton: !0,tapToDismiss: !1});
-			}		
+            const vResponseObj = await response.json();
+            if (vResponseObj.status === "true") {
+                toastr.success("Successfully Updated", "Completed", {
+                    closeButton: true,
+                    tapToDismiss: false
+                });
+                showDarListForm('');
+            } else {
+                toastr.warning("Invalid Dar Details", "Warning", {
+                    closeButton: true,
+                    tapToDismiss: false
+                });
+            }
         } else {
             console.error('Error submitting expenses:', response.statusText);
         }
@@ -612,7 +619,6 @@ async function updateDarExpensesDetails() {
         console.error('Error:', error);
     }
 };
-
 
 async function deleteDarExpensesDetails(vObj){
 	var row = vObj.parentNode;

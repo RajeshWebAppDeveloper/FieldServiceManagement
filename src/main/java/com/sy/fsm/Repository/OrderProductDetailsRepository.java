@@ -26,4 +26,7 @@ public interface OrderProductDetailsRepository extends JpaRepository<OrderProduc
 	
 	@Query(value = "SELECT * from order_product_details WHERE reference_id = :referenceId",nativeQuery = true)
 	List<OrderProductDetails> findByReferenceId(String referenceId);
+	
+	@Query(value = "SELECT sum(total) from order_product_details WHERE reference_id = :referenceId",nativeQuery = true)
+	int findByReferenceIdAndResetTotalProduct(String referenceId);
 }

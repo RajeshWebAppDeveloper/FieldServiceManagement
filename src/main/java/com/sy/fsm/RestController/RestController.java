@@ -1198,12 +1198,27 @@ public class RestController {
 			try {
 				System.out.println("/fsm/deleteOrderProductsDetails::::::::::"+payload);
 				JSONObject jObj = new JSONObject(payload);
-				String idString = jObj.getString("ID");			
-				UUID id = UUID.fromString(idString);			
+				String idString = jObj.getString("orderProductId");
+				String orderIdString = jObj.getString("orderId");
+				UUID id = UUID.fromString(idString);				
+				
+								
 				Optional<OrderProductDetails> ordProductDetailsRecord = orderProductDetailsRepository.findById(id);			
 				if(ordProductDetailsRecord.isPresent()){					
 					OrderProductDetails estProductDetails = ordProductDetailsRecord.get();
-					orderProductDetailsRepository.delete(estProductDetails);						
+					orderProductDetailsRepository.delete(estProductDetails);
+					
+					
+					int totalProductAmount= orderProductDetailsRepository.findByReferenceIdAndResetTotalProduct(orderIdString);
+					UUID orderId = UUID.fromString(orderIdString);
+					Optional<OrderDetails> existingDetailsRecord = orderDetailsRepository.findById(orderId);			
+					if(existingDetailsRecord.isPresent()){					
+						OrderDetails ordDetails = existingDetailsRecord.get();
+						ordDetails.setTotalProductAmount(totalProductAmount+"");
+						int finalTotalOrderAmount = totalProductAmount+Integer.parseInt(ordDetails.getDeliveryCharges())+Integer.parseInt(ordDetails.getGst());
+						ordDetails.setTotalAmount(finalTotalOrderAmount+"");
+						orderDetailsRepository.save(ordDetails);
+					}
 					vResponse =  "{\"status\":\"true\"}";
 				}
 				

@@ -212,7 +212,7 @@ async function filterEstimation() {
     let url = "/fsm/getFilterEstimationDetailsList";
     await getDataFromServicePoint(url, jsonObj)
         .then(data => populateEstimationListVResponse(data, "est_list_form"))
-        .catch(error => handleError("filterEstimation", error));
+        .catch(error => handleErrorForList(itemName,error,'est_list_table_container'));
 };
 
 

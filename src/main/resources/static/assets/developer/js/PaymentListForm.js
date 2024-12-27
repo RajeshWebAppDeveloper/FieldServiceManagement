@@ -243,7 +243,7 @@ async function filterPayment() {
 
     await getDataFromServicePoint(url, jsonObj)
         .then(async data => await populatePaymentListVResponse(data, "payment_list_form"))
-        .catch(error => handleError(itemName, error));
+        .catch(error => handleErrorForList(itemName,error,'payment_list_table_container'));
 };
 
 function clearPaymentFilters() {

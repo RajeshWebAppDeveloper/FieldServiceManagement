@@ -10,6 +10,9 @@ function getProductListForm(){
 	            <a href="#" class="btn btn-primary float-right btn-rounded" onclick="getProductList('products_list_form')">
 	                <i class="fas fa-refresh"></i> Refresh
 	            </a>
+				<a href="#" class="btn btn-primary float-right btn-rounded" onclick="importProductCSVfile()">
+	                <i class="fas fa-file-import"></i> Import
+	            </a>
 	            <a href="#" class="btn btn-primary float-right btn-rounded" onclick="showProductEntryForm('add')">
 	                <i class="fas fa-plus"></i> Add Product
 	            </a>
@@ -164,6 +167,51 @@ async function filterProduct() {
         // Call the backend with the constructed JSON object
         await getDataFromServicePoint(url, jsonObj)
             .then(async data => await populateProductListVResponse(data, "product_list_form"))
-            .catch(error => handleError(itemName, error));
+            .catch(error => handleErrorForList(itemName,error,'product_list_form'));
     }
 };
+
+async function importProductCSVfile() {
+    var fileInput = document.createElement("INPUT");    
+    fileInput.setAttribute("type", "file");
+    fileInput.setAttribute("accept", ".csv"); 
+    
+    fileInput.addEventListener("change", async () => {
+        if (!fileInput.files.length) {
+            toastr.warning("Please select a file before submitting.", "Warning", { closeButton: true, tapToDismiss: false });
+            return;
+        }
+
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {       
+            const response = await fetch('/fsm/importProductCSVfile', {  // Corrected the endpoint
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const vResponseObj = await response.json();
+                console.log(vResponseObj);
+
+                if (vResponseObj.status === "true") {
+                    toastr.success("Successfully Imported.", "Completed", { closeButton: true, tapToDismiss: false });
+                    showProductListForm('');
+                } else {
+                    toastr.warning(vResponseObj.message || "Importing process failed.", "Warning", { closeButton: true, tapToDismiss: false });
+                }
+            } else {
+                console.error('Error importing file:', response.statusText);
+                toastr.error("An error occurred during the import process.", "Error", { closeButton: true, tapToDismiss: false });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            toastr.error("An unexpected error occurred.", "Error", { closeButton: true, tapToDismiss: false });
+        }
+    });
+
+    fileInput.click();
+};
+

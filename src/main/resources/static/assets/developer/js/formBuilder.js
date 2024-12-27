@@ -85,9 +85,15 @@ async function getDataFromServicePoint(url = ``, formData = {}) {
 
 function handleError(formName,error){
 	//alert("ERROR:"+formName+"::::"+error);
-	toastr.error(formName+"::::"+error,"Error", {closeButton: !0,tapToDismiss: !1});
+	toastr.error(formName+"::::"+error,"Error", {closeButton: !0,tapToDismiss: !1});	
+};
+
+function handleErrorForList(formName,error,tableContainerId){	
 	if(error == "TypeError: can't convert undefined to object"){
-		toastr.warning("No Data","Error", {closeButton: !0,tapToDismiss: !1});
+		toastr.warning(formName+" -- No Data","Warning", {closeButton: !0,tapToDismiss: !1});		
+		document.getElementById(tableContainerId).innerHTML = "";
+	}else{
+		toastr.error(formName+"::::"+error,"Error", {closeButton: !0,tapToDismiss: !1});
 	}
 };
 

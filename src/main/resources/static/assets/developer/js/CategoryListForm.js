@@ -7,9 +7,15 @@ function getCategoryListForm(){
 	            <h2 class="page-title">Categorys Details</h2>
 	        </div>
 	        <div class="col-sm-8 col-9 text-end m-b-20">
+				
 	            <a href="#" class="btn btn-primary float-right btn-rounded" onclick="getCategoryList('categorys_list_form')">
 	                <i class="fas fa-refresh"></i> Refresh
 	            </a>
+				
+				<a href="#" class="btn btn-primary float-right btn-rounded" onclick="importCategoryCSVfile()">
+	                <i class="fas fa-file-import"></i> Import
+	            </a>
+				
 	            <a href="#" class="btn btn-primary float-right btn-rounded" onclick="showCategoryEntryForm('add')">
 	                <i class="fas fa-plus"></i> Add Category
 	            </a>
@@ -188,6 +194,52 @@ async function filterCategory(){
         // Call the backend with the constructed JSON object
         await getDataFromServicePoint(url, jsonObj)
             .then(async data => await populateCategoryListVResponse(data,"category_list_form"))
-            .catch(error => handleError(itemName, error));
+            .catch(error => handleErrorForList(itemName,error,'category_list_table_container'));
     }
+};
+
+
+async function importCategoryCSVfile() {
+    
+    var fileInput = document.createElement("INPUT");    
+    fileInput.setAttribute("type", "file");
+    fileInput.setAttribute("accept", ".csv"); 
+	
+    fileInput.addEventListener("change", async () => {
+        if (!fileInput.files.length) {
+            toastr.warning("Please select a file before submitting.", "Warning", { closeButton: true, tapToDismiss: false });
+            return;
+        }
+
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {       
+            const response = await fetch('/fsm/importCategoryCSVfile', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const vResponseObj = await response.json();
+                console.log(vResponseObj);
+                
+                if (vResponseObj.status === "true") {
+                    toastr.success("Successfully Imported.", "Completed", { closeButton: true, tapToDismiss: false });
+                    showCategoryListForm('');
+                } else {
+                    toastr.warning("Importing process failed.", "Warning", { closeButton: true, tapToDismiss: false });
+                }
+            } else {
+                console.error('Error importing file:', response.statusText);
+                toastr.error("An error occurred during the import process.", "Error", { closeButton: true, tapToDismiss: false });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            toastr.error("An unexpected error occurred.", "Error", { closeButton: true, tapToDismiss: false });
+        }
+    });
+
+    fileInput.click();
 };

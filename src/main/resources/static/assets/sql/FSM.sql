@@ -637,7 +637,7 @@ CREATE TABLE dar_expenses_details(
 
 
 --SELECT * FROM getFSMUserIdsBasedDarDetailsList('001,USR_2,USR_3');
-
+--DROP FUNCTION IF EXISTS getFSMUserIdsBasedDarDetailsList(VARCHAR) CASCADE;
 CREATE OR REPLACE FUNCTION public.getFSMUserIdsBasedDarDetailsList(userIds VARCHAR)
 																	RETURNS SETOF dar_details
 																	LANGUAGE 'plpgsql'
@@ -665,7 +665,7 @@ CREATE OR REPLACE FUNCTION public.getFSMUserIdsBasedDarDetailsList(userIds VARCH
 $BODY$;
 
 
-
+DROP FUNCTION IF EXISTS getFSMUserIdsBasedDarDetailsList(VARCHAR,TIMESTAMP,TIMESTAMP,VARCHAR,VARCHAR,TIMESTAMP,TIMESTAMP,VARCHAR) CASCADE;
  CREATE OR REPLACE FUNCTION public.getFilterDarDetailsList(
      darNo VARCHAR,
      darPerformFromDate TIMESTAMP,
