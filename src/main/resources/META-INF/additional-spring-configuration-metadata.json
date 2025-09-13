@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "upload.dir",
+    "type": "java.lang.String",
+    "description": "A description for 'upload.dir'"
+  },
+  {
+    "name": "jasperreports.fonts",
+    "type": "java.lang.String",
+    "description": "A description for 'jasperreports.fonts'"
+  },
+  {
+    "name": "net.sf.jasperreports.default.pdf.embedded",
+    "type": "java.lang.String",
+    "description": "A description for 'net.sf.jasperreports.default.pdf.embedded'"
+  },
+  {
+    "name": "net.sf.jasperreports.default.pdf.font.name",
+    "type": "java.lang.String",
+    "description": "A description for 'net.sf.jasperreports.default.pdf.font.name'"
+  },
+  {
+    "name": "net.sf.jasperreports.extension.registry.factory.fonts",
+    "type": "java.lang.String",
+    "description": "A description for 'net.sf.jasperreports.extension.registry.factory.fonts'"
+  },
+  {
+    "name": "net.sf.jasperreports.extension.simple.font.families.myfontfamily",
+    "type": "java.lang.String",
+    "description": "A description for 'net.sf.jasperreports.extension.simple.font.families.myfontfamily'"
+  },
+  {
+    "name": "net.sf.jasperreports.default.font.name",
+    "type": "java.lang.String",
+    "description": "A description for 'net.sf.jasperreports.default.font.name'"
+  }
+]}

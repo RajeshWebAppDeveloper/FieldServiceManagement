@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="" data-layout="fluid" data-sidebar-theme="" data-sidebar-position="left" data-sidebar-behavior="sticky">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Feild Service Management & Dealing , Product Delivery ...">
+    <meta name="author" content="Bootlab">
+    <title>FSM</title>
+    
+    <link href="css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="/assets/css/app.css" rel="stylesheet">
+    <link href="/assets/developer/css/loader.css" rel="stylesheet">
+    <link href="/assets/developer/css/warning.css" rel="stylesheet">
+    <link href="/assets/developer/css/common.css" rel="stylesheet">
+    <link href="/assets/developer/css/jsonCheckableTreeCore.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins//toastr/toatr.css">
+</head>
+<script async="" src="/assets/gtag/js?id=G-Q3ZYEKLQ68"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Q3ZYEKLQ68');
+</script>
+<body>
+<form action="/fsm/Admin" method="post" >
+    <input type="hidden"  th:value="${userId}" id="vResponse_login_user_id" name="userId" />
+    <input type="hidden"  th:value="${userName}" id="vResponse_login_user_name" name="userName" />
+    <input type="hidden"  th:value="${roleName}" id="vResponse_login_role_name" name="roleName" />
+    <input type="hidden"  th:value="${profileImageName}" id="vResponse_login_profile_image_name" name="profileImageName" />
+    <input type="hidden"  th:value="${userRights}" id="vResponse_login_user_rights" name="userRights" />            
+</form>
+<div  id="transparent_general_form_container_id" style="display: none;"></div>  
+<div  id="transparent_loader_container_id" style="display:none;">   
+    <div class="loader_box">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>  
+
+<div  id="transparent_warning_container_id" style="visibility: hidden;"></div>
+<div class="wrapper">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class='sidebar-brand' href='#'>
+                    <!--<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+                        <path d="M19.4,4.1l-9-4C10.1,0,9.9,0,9.6,0.1l-9,4C0.2,4.2,0,4.6,0,5s0.2,0.8,0.6,0.9l9,4C9.7,10,9.9,10,10,10s0.3,0,0.4-0.1l9-4
+                          C19.8,5.8,20,5.4,20,5S19.8,4.2,19.4,4.1z"></path>
+                        <path d="M10,15c-0.1,0-0.3,0-0.4-0.1l-9-4c-0.5-0.2-0.7-0.8-0.5-1.3c0.2-0.5,0.8-0.7,1.3-0.5l8.6,3.8l8.6-3.8c0.5-0.2,1.1,0,1.3,0.5
+                          c0.2,0.5,0,1.1-0.5,1.3l-9,4C10.3,15,10.1,15,10,15z"></path>
+                        <path d="M10,20c-0.1,0-0.3,0-0.4-0.1l-9-4c-0.5-0.2-0.7-0.8-0.5-1.3c0.2-0.5,0.8-0.7,1.3-0.5l8.6,3.8l8.6-3.8c0.5-0.2,1.1,0,1.3,0.5
+                          c0.2,0.5,0,1.1-0.5,1.3l-9,4C10.3,20,10.1,20,10,20z"></path>
+                      </svg>-->
+					  <img src="/assets/img/photos/logo_fsm.jpeg" class="img-fluid rounded-circle me-1 mt-n2 mb-n2" alt="" style="height:50px;width:50px;" >  
+                    <span class="align-middle me-3" style="font-family: 'Times New Roman', Times, serif;;">FSM</span>
+                </a>
+                <div class="sidebar-content js-simplebar" id="sidebar_navigation_menu_container">                   
+                                        
+                </div>
+                
+            </div>
+        </nav>
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-bg">
+                <a class="sidebar-toggle">
+                  <i class="hamburger align-self-center"></i>
+                </a>
+                <form class="d-none d-sm-inline-block">
+                    <div class="input-group input-group-navbar">    
+                        <div class="header-nav-blk">
+                            <h4 id="fsm_loginer_role_name"></h4>
+                            <span id="fsm_loginer_user_id" style="color:#3f80ea;font-weight:bold;"></span>
+                        </div>                                      
+                    </div>
+                </form>             
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item nav-theme-toggle dropdown">
+                            <a class="nav-icon js-theme-toggle" href="#">
+                                <div class="position-relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sun" class="lucide lucide-sun align-middle text-body nav-theme-toggle-light"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="moon" class="lucide lucide-moon align-middle text-body nav-theme-toggle-dark"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                                </div>
+                            </a>
+                        </li>
+                                                
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown" aria-expanded="false" onclick="headerMenubox(this)">
+                                <img src="/assets/img/avatars/user.png" class="img-fluid rounded-circle me-1 mt-n2 mb-n2" alt="" style="height:50px;width:50px;" id="fsm_loginer_profile_image_id">
+                                <span id="fsm_loginer_user_name">Guest</span>                               
+                              </a><div class="dropdown-menu dropdown-menu-end">
+                                <!--<a class='dropdown-item' href='#'><i class="align-middle me-1" data-lucide="user"></i> Profile</a>-->
+                                <a class="dropdown-item" href="#" onclick="logOut()"><i class="align-middle me-1" data-lucide="log-out"></i> LogOut</a>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </nav>
+            <datalist id="product_name_list_datalist_tag"></datalist>
+            <datalist id="product_id_list_datalist_tag"></datalist>
+            
+			<main class="content" id="dashboard_list_form"></main>
+            <main class="content" id="users_list_form"></main>
+            <main class="content" id="users_entry_form"></main>
+            <main class="content" id="category_list_form"></main>
+            <main class="content" id="product_list_form"></main>
+            <main class="content" id="dar_list_form"></main>
+            <main class="content" id="dar_entry_form"></main>
+            <main class="content" id="est_list_form"></main>
+            <main class="content" id="est_entry_form"></main>
+            <main class="content" id="order_list_form"></main>
+            <main class="content" id="order_entry_form"></main>
+			<main class="content" id="payment_list_form"></main>
+			<main class="content" id="defaultProperties_list_form"></main>			            
+        </div>
+    </div>
+    
+</body>
+<script>
+    function headerMenubox(vObj){
+        var classNameOfAtag =  vObj.className;
+        if(classNameOfAtag == "nav-link dropdown-toggle d-none d-sm-inline-block"){
+            vObj.setAttribute("class","nav-link dropdown-toggle d-none d-sm-inline-block show");
+            vObj.setAttribute("aria-expanded","true");
+            vObj.nextSibling.setAttribute("class","dropdown-menu dropdown-menu-end show")
+            vObj.nextSibling.setAttribute("data-bs-popper","static")
+        }else{
+            vObj.setAttribute("class","nav-link dropdown-toggle d-none d-sm-inline-block");
+            vObj.setAttribute("aria-expanded","false");
+            vObj.nextSibling.setAttribute("class","dropdown-menu dropdown-menu-end")
+            vObj.nextSibling.setAttribute("data-bs-popper","")          
+        }
+    };
+    
+    
+    var logginerUserId = document.getElementById("vResponse_login_user_id").value;
+    var logginerUserName = document.getElementById("vResponse_login_user_name").value;
+    var logginerRoleName = document.getElementById("vResponse_login_role_name").value;
+    var logginerProfileImage = document.getElementById("vResponse_login_profile_image_name").value;
+    var logginerUserRights = document.getElementById("vResponse_login_user_rights").value;
+	
+	
+	
+    if(logginerUserId != ""){		
+		window.addEventListener("load", () => {
+		  history.replaceState(null, "", window.location.href);				  
+		  history.pushState(null, "", window.location.href);
+		  window.addEventListener("popstate", (event) => {
+		    history.pushState(null, "", window.location.href);
+		  });
+		});	 
+	}
+    document.getElementById("fsm_loginer_role_name").innerHTML = logginerRoleName;
+    document.getElementById("fsm_loginer_user_id").innerHTML = logginerUserId;
+    document.getElementById("fsm_loginer_user_name").innerHTML = logginerUserName;
+    
+    
+    if(logginerProfileImage != ""){             
+        document.getElementById("fsm_loginer_profile_image_id").src = "/fsm/RetrieveFile/"+logginerProfileImage;    
+    }
+	
+	</script>
+
+<script src="/assets/developer/js/commonCore.js"></script>
+<script src="/assets/developer/js/navigation.js"></script>
+<script src="/assets/developer/js/warning.js"></script>
+<script src="/assets/developer/js/validation.js"></script>
+<script src="/assets/developer/js/adminDashboard.js"></script>
+<script src="/assets/developer/js/UsersListForm.js"></script>
+<script src="/assets/developer/js/UsersEntryForm.js"></script>
+<script src="/assets/developer/js/TeamMemberListForm.js"></script>
+<script src="/assets/developer/js/CategoryListForm.js"></script>
+<script src="/assets/developer/js/CategoryEntryForm.js"></script>
+<script src="/assets/developer/js/ProductListForm.js"></script>
+<script src="/assets/developer/js/ProductEntryForm.js"></script>
+<script src="/assets/developer/js/DarListForm.js"></script>
+<script src="/assets/developer/js/DarEntryForm.js"></script>
+<script src="/assets/developer/js/EstimationListForm.js"></script>
+<script src="/assets/developer/js/EstimationEntryForm.js"></script>
+<script src="/assets/developer/js/OrderListForm.js"></script>
+<script src="/assets/developer/js/OrderEntryForm.js"></script>
+<script src="/assets/developer/js/PaymentListForm.js"></script>
+<script src="/assets/developer/js/DefaultPropertiesListForm.js"></script>
+<script src="/assets/developer/js/DefaultPropertiesEntryForm.js"></script>
+<script src="/assets/developer/js/jsonCheckableTreeCore.js"></script>
+<script src="/assets/developer/js/buildDataTableCore.js"></script>
+<script src="/assets/developer/js/formBuilder.js"></script>
+
+
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>    
+    <script src="/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/plugins/datatables/datatables.min.js"></script>
+    <script src="/assets/js/jquery.slimscroll.js"></script>
+    <script src="/assets/js/select2.min.js"></script>        
+    <script src="/assets/js/moment.min.js"></script>
+    <script src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+        
+    
+    <script src="/assets/plugins/toastr/toastr.js"></script>
+    <script src="/assets/plugins/toastr/toastr.min.js"></script>
+    <script src="/assets/plugins/sweetalert/sweetalert.js"></script>
+    <script src="/assets/js/app.js"></script>
+</html>

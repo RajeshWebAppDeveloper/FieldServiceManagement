@@ -1,0 +1,10 @@
+.ticket-card {
+    border: 1px solid #e0e0e0; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s; /* Animation for hover effect */
+}
+
+.ticket-card:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}

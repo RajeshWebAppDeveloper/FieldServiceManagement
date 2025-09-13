@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en" data-bs-theme="dark" data-layout="fluid" data-sidebar-theme="dark" data-sidebar-position="left" data-sidebar-behavior="sticky">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="FSM">
+	<meta name="author" content="Field Service Management">
+
+	<title>FSM</title>
+
+	<link rel="canonical" href="auth-2fa-1.html">
+	<link rel="shortcut icon" href="img/favicon.ico">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+	<link href="css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+	<link href="/assets/css/app.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/assets/plugins//toastr/toatr.css">
+	<!--<link rel="stylesheet" type="text/css" href="assets/plugins/toastr/toastify.css">-->
+
+	
+	
+	
+	<!--
+	<script src="js/settings.js"></script>
+
+	<script async="" src="gtag/js?id=G-Q3ZYEKLQ68"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-Q3ZYEKLQ68');
+	</script>-->
+</head>
+
+<body>
+	<form action="/fsm/login" method="post" >
+		<input type="hidden"  th:value="${status}" id="vResponse_login_status" name="status" />
+		<input type="hidden"  th:value="${validateMessage}" id="vResponse_login_validate_message" name="validateMessage" />
+	</form>
+	<form action="/error" method="post" >
+		<input type="hidden"  th:value="${errorName}" id="vResponse_error_errorName" name="errorName" />
+		<input type="hidden"  th:value="${message}" id="vResponse_error_message" name="message" />
+	</form>
+	<div class="container-fluid p-0">
+		<div class="row g-0">
+			<div class="col-xl-6 d-none d-xl-flex">
+				<div class="auth-full-page position-relative">
+					<img src="/assets/img/photos/unsplash-4.jpg" class="auth-bg" alt="">
+					<div class="auth-quote">
+						<i data-lucide="quote" style="text-shadow: 2px 2px blue;"></i>
+						<figure>
+							<blockquote>
+								<p style="text-shadow: 2px 2px blue;">Time is the scarcest resource, and unless it is managed, nothing else can be managed.</p>
+							</blockquote>							
+						</figure>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6">
+				<div class="auth-full-page d-flex p-4 p-xl-5">
+					<div class="d-flex flex-column w-100 h-100">
+						<div class="auth-form">
+
+							<div class="text-center">
+								<h1 class="h2" style="font-family: 'Times New Roman', Times, serif;text-shadow: 2px 2px blue;color:#ffffff;">FSM</h1>
+								<p class="lead"></p>
+								<img src="/assets/img/photos/logo_fsm.jpeg" class="img-fluid rounded-circle me-1 mt-n2 mb-n2" alt="" style="height:50px;width:50px;" >
+								<p class="lead"></p>
+								<p class="lead" style="font-family: 'Times New Roman', Times, serif;text-shadow: 2px 2px blue;color:#ffffff;">
+									(Field Service Management)
+								</p>
+							</div>
+
+							<div class="mb-3">
+								<form action="/fsm/LoginDetailsValidate" method="post" id="fsm_login_account_box_container">
+									<div class="mb-3">
+										<label class="form-label">User Name</label>
+										<input class="form-control form-control-lg" type="text" name="User Name" placeholder="Enter the User Name" required="" autocomplete="off">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Password</label>
+										<input class="form-control form-control-lg" type="Password" name="Password" placeholder="Enter the Password" required="" autocomplete="off">
+									</div>
+									<div class="d-grid gap-2 mt-3">								
+										<button class="btn btn-lg btn-primary"  type="submit">Log In <i class="fas fa-arrow-right ms-1"></i></button>
+									</div>
+								</form>
+							</div>							
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="/assets/js/jquery-3.6.0.min.js"></script>
+	<script src="/assets/plugins/toastr/toastr.js"></script>
+	<script src="/assets/plugins/toastr/toastr.min.js"></script>
+	<script src="/assets/js/popper.min.js"></script>
+	<script src="/assets/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/js/jquery.slimscroll.js"></script>	
+	<script src="/assets/js/app.js"></script>
+	<script type="text/javascript">
+		window.addEventListener("load", () => {
+		  history.replaceState(null, "", window.location.href);				  
+		  history.pushState(null, "", window.location.href);
+		  window.addEventListener("popstate", (event) => {
+		    history.pushState(null, "", window.location.href);
+		  });
+		});	   
+		
+		/****************************************************************************************/
+		var vResponseLoginStatus = document.getElementById("vResponse_login_status").value;
+		var alertMessage 		= document.getElementById("vResponse_login_validate_message").value;						
+		var loginAccountBox = document.getElementById("fsm_login_account_box_container");
+		if(vResponseLoginStatus == "true"){
+			toastr.success("User ID & Password Matched Correctly...","Signing...", {closeButton: !0,tapToDismiss: !1});					
+		}else{		
+			try{
+				if(alertMessage == "Invalid User Id"){
+					toastr.error("Invalid User Id","Error", {closeButton: !0,tapToDismiss: !1});
+				}else if(alertMessage == "Invalid password"){
+					toastr.error("Invalid Password","Error", {closeButton: !0,tapToDismiss: !1});
+				}
+
+			}catch(exp){
+				alert(exp);
+			}				
+		};
+		
+		         
+		var errorStatus  = document.getElementById("vResponse_error_errorName").value;						
+		var errorMessage = document.getElementById("vResponse_error_message").value;
+		if(errorStatus != "" || errorMessage != ""){
+			toastr.warning(errorMessage,errorStatus, {closeButton: !0,tapToDismiss: !1});	
+		}
+		
+	</script>
+
+</body>
+</html>
+

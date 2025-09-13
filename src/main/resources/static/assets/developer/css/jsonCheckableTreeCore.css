@@ -1,0 +1,41 @@
+.treeUlistCls {list-style-type:none;margin-left: 0px;}
+.treeListCls {position: relative;top: 3%;border-left:1px dotted blue;list-style-type:none;}
+.treeInputCls {position:relative;left:1%;}
+.treeLabelCls {position:relative;left:2%;font-family: "Times New Roman";font-style: italic;}
+.reportsIFrameCls {position: relative;height: 80vh;width: 100%;border:1px solid #ff9b44;border-radius:5px;}
+
+
+.purchaseFormEnterContainerCls		{position: relative;height:auto;width: 90%;top: 5%;left: 5%;box-shadow: 0px 0px 10px 0px grey;z-index: 10;background-color: white;border-radius: 10px;float: left;margin-bottom: 50px;}
+.purchaseFormEnterBodyContainerCls	 {position: relative;height: auto;width: 100%;display: grid;grid-template-columns: 33% 33% 33%;margin-bottom: 50px;}
+.purchaseFormEnterBtnContainerCls {position: relative;height: 48px;width: 70%;left: 15%;bottom: 1%;}
+
+.billingPaymentHeaderlblCls {color:#7638ff;font-family:"Times New Roman";font-style:italic;font-weight: bold;}
+
+
+@media only screen and (min-width: 300px) and (max-width: 500px){
+	#transparent_main_container_id {background-color: rgba(0,0,0,0.8);transition: opacity;}
+	.treeUlistCls {list-style-type:none;}
+	.treeListCls {position: relative;top: 3%;/*border-left:1px dotted white;*/list-style-type:none;}
+	.treeInputCls {position:relative;left:1%;}
+	.treeLabelCls {position:relative;left:2%;font-family: "Times New Roman";font-style: italic;color: white;}
+	.reportsIFrameCls {position: relative;height: 1000px;width: 100%;border:none;}
+
+	.purchaseFormEnterContainerCls		{position: relative;height: auto;width: 90%;top: 5%;left: 5%;box-shadow: 0px 0px 10px 0px grey;z-index: 10;border-radius: 10px;background: transparent;float: left;}
+	.purchaseFormEnterBodyContainerCls 	{position: relative; height: auto; width: 98%; left: 1%; float: left; background: transparent; display: block;margin-bottom: 50px;}
+
+	.billingPaymentHeaderlblCls {color:#7638ff;font-family:"Times New Roman";font-style:italic;font-weight: bold;}
+}
+
+@media only screen and (min-width: 500px) and (max-width: 780px){
+	#transparent_main_container_id {background-color: rgba(0,0,0,0.8);transition: opacity;}
+	.treeUlistCls {list-style-type:none;}
+	.treeListCls {position: relative;top: 3%;border-left:1px dotted white;list-style-type:none;}
+	.treeInputCls {position:relative;left:1%;}
+	.treeLabelCls {position:relative;left:2%;font-family: "Times New Roman";font-style: italic;color: white;}
+	.reportsIFrameCls {position: relative;height: 1000px;width: 100%;border:none;}
+
+	.purchaseFormEnterContainerCls		{position: relative;height: auto;width: 90%;top: 5%;left: 5%;box-shadow: 0px 0px 10px 0px grey;z-index: 10;border-radius: 10px;background: transparent;float: left;}
+	.purchaseFormEnterBodyContainerCls 	{position: relative; height: auto; width: 98%; left: 1%; float: left; background: transparent; display: block;margin-bottom: 50px;}
+
+	.billingPaymentHeaderlblCls {color:#7638ff;font-family:"Times New Roman";font-style:italic;font-weight: bold;}
+}
