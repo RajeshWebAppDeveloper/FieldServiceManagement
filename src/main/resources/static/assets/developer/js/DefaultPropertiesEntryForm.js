@@ -202,8 +202,10 @@ function createOptionTagInSelectTag(selectTagId,propValuesString){
 	var propValuesArray = propValuesString.split(",");
 	var optionArray = new Array();
 	for(var gg = 0 ; gg < propValuesArray.length;gg++){
-		var optionTag = `<option>`+propValuesArray[gg]+`</option>`;
-		optionArray.push(optionTag);	
+		if(propValuesArray[gg] != "All"){
+			var optionTag = `<option>`+propValuesArray[gg]+`</option>`;
+			optionArray.push(optionTag);		
+		}		
 	}
 	var optionArrayHTML = optionArray.join("");
 	document.getElementById(selectTagId).innerHTML = optionArrayHTML;

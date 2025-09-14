@@ -18,6 +18,9 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails, UUID> 
 	@Query(value = "SELECT * FROM user_details WHERE role_name= :roleName", nativeQuery = true)
 	Optional<UserDetails> findByRoleName(String roleName);
 	
+	@Query(value = "SELECT * FROM user_details WHERE role_name= :roleName", nativeQuery = true)
+	List<UserDetails> getUserListByRoleName(String roleName);
+	
 	@Query(value = "SELECT count(*) FROM user_details",nativeQuery = true)
 	int getNumberOfuserDetails();
 	

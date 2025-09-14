@@ -1,3 +1,4 @@
+var selectedUserRoleTagName  = "";
 
 function getUsersListForm(){
     var form = `
@@ -36,7 +37,7 @@ function getUsersListForm(){
 	                        </div>
 	                        <div class="col-md-3">
 	                            <label for="users_list_filter_roleName" class="form-label">Role Name</label>
-	                            <select class="form-select" id="users_list_filter_roleName" autocomplete="off"></select>
+	                            <select class="form-select" id="users_list_filter_roleName" autocomplete="off" onchange="filterUserRoleNameBasedTagList(this)"></select>
 	                        </div>
 	                        <div class="col-md-3">
 	                            <label for="users_list_filter_branchName" class="form-label">Branch Name</label>
@@ -59,12 +60,14 @@ function getUsersListForm(){
 	                        <div class="col-12 text-end mt-3">
 								<button type="button" class="btn btn-secondary" onclick="clearFilterInputs()">Clear Filters</button>
 	                            <button type="button" class="btn btn-primary" onclick="filterUsers()">Filter</button>	                            
-	                        </div>
+	                        </div>												
 	                    </form>
 	                </div>
 	            </div>
 	        </div>
 	    </div>
+		
+		<div class="buy-form" id="user_role_tag_container"></div>
 
 	    <!-- Table -->
 	    <div class="buy-form">                          
@@ -88,10 +91,14 @@ function showUsersListForm(backMethod){
         hideAllLayer();	
         var containerId = "users_list_form";         
         document.getElementById(containerId).style.display = "block";
-		if(backMethod != "true"){		
-			getUsersList(containerId);	
-		}		
+		if(backMethod != "true"){					
+			getUsersList(containerId);																
+		}
 		createOptionTagInSelectTag("users_list_filter_roleName",users_UserRolesArrayString);
+		createUserRoleTagButtons("user_role_tag_container",users_UserRolesArrayString);
+		document.getElementById("user_role_tag_container").childNodes[0].click();	
+				
+				
     }catch(exp){
         alert(exp);
 		toastr.error(exp,"Error", {closeButton: !0,tapToDismiss: !1});
@@ -101,7 +108,8 @@ function showUsersListForm(backMethod){
 
 async function getUsersList(containerId){
     var jsonObj = JSON.parse("{}");
-    jsonObj['ID'] = "all";      	
+    jsonObj['ID'] = "all";	
+	jsonObj['Role Name'] = selectedUserRoleTagName;	
     let url = "/fsm/getUsersDetailsList";
 	let itemName= "getUsersDetailsList";
     getDataFromServicePoint(url,jsonObj)
@@ -198,5 +206,39 @@ async function filterUsers(){
 };
 
 
+function createUserRoleTagButtons(containerId,propValuesString){
+	var propValuesArray = propValuesString.split(",");
+	var btnArray = new Array();
+	for(var gg = 0 ; gg < propValuesArray.length;gg++){
+		var btnTag= `<button class="btn btn-light" style="margin:5px" onclick="getSelectedUserTagBasedRoleName(this)">`+propValuesArray[gg]+`</button>`;		
+		btnArray.push(btnTag);	
+	}
+	var btnArrayHTML = btnArray.join("");
+	document.getElementById(containerId).innerHTML = btnArrayHTML;
+};
 
+function getSelectedUserTagBasedRoleName(vObj){
+	
+	selectedUserRoleTagName = vObj.innerHTML;	   
+	if(selectedUserRoleTagName == "All"){
+		selectedUserRoleTagName = "";
+	}
+	document.getElementById("users_list_filter_roleName").value = selectedUserRoleTagName;      
+	getUsersList("users_list_form");
+	
+	var parentContainer = document.getElementById("user_role_tag_container");
+	for(var gg=0; gg < parentContainer.childNodes.length;gg++){
+		parentContainer.childNodes[gg].style.border = "";
+	}
+	
+	vObj.style.border= "2px solid grey";			
+};
 
+function filterUserRoleNameBasedTagList(vObj){	
+	var parentContainer = document.getElementById("user_role_tag_container");
+	for(var gg=0; gg < parentContainer.childNodes.length;gg++){
+		if(parentContainer.childNodes[gg].innerHTML == vObj.value){
+			parentContainer.childNodes[gg].click();
+		}
+	}
+};

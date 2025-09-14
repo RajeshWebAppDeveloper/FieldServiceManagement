@@ -89,7 +89,7 @@ function getUsersEntryForm(showType) {
                             <div class="col-lg-6">
 								<div class="form-group">
                                     <label class="form-label">Leader User ID</label>
-                                    <input class="form-control" type="text" id="user_entry_leader_user_id_txt" placeholder="System Process - Control" disabled>
+                                    <input class="form-control" type="text" id="user_entry_leader_user_id_txt" placeholder="System Process - Control" >
                                 </div>
                             	 <div class="form-group">
                                     <label class="form-label">Rep Code<span class="text-danger">*</span></label>
@@ -176,6 +176,8 @@ function showUsersEntryForm(action){
         document.getElementById(containerId).style.display = "block";
 		createOptionTagInSelectTag("user_entry_role_name_txt",users_UserRolesArrayString);
 		getUserRoleFeatures("fsm_user_rights_checkbox_tree_container");
+				
+		document.getElementById("user_entry_role_name_txt").value = selectedUserRoleTagName;
     }catch(exp){        
 		toastr.error(exp,"Error", {closeButton: !0,tapToDismiss: !1});
     }

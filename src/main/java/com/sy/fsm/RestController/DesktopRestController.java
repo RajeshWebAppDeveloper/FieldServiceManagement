@@ -1254,9 +1254,14 @@ public class DesktopRestController {
 				System.out.println("/fsm/getUsersDetailsList::::::::::"+payload);
 				JSONObject jObj = new JSONObject(payload);
 				String idString = jObj.getString("ID");
-				System.out.println(idString);
-				ObjectMapper mapper = new ObjectMapper();		
-				List<UserDetails> userList = userDetailsRepository.findAll();
+				String roleName = jObj.getString("Role Name");				
+				ObjectMapper mapper = new ObjectMapper();	
+				List<UserDetails> userList = null;
+				if(!roleName.equalsIgnoreCase("") && !roleName.equalsIgnoreCase("All")) {					
+					userList = userDetailsRepository.getUserListByRoleName(roleName);
+				}else if(roleName.equalsIgnoreCase("All") || roleName == null || roleName.equalsIgnoreCase("")) {					
+					userList = userDetailsRepository.findAll();
+				}				
 				String sourceString = mapper.writeValueAsString(userList);
 				vResponse = "{\"status\":\"true\",\"data\":"+sourceString+"}";
 				
